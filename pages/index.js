@@ -26,13 +26,13 @@ const DUMMY_MEETUPS = [
 
 export default function Home(props) {
   return (
-    <>
+    <div>
     <Head>
       <title>Restaurant Booking</title>
       <meta name='description' />
     </Head>
       <MeetupList meetups={props.restos} />
-    </>
+    </div>
   );
 }
 
