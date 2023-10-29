@@ -2,12 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-
-:root {
- 
-}
-
-
-body {
- 
+body{
+   background-color: #010101;
 }

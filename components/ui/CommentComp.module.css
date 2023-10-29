@@ -1,0 +1,25 @@
+.main {
+  align-self: center;
+  background-color: #D9D9D9;
+  height:40vh;
+  width:20vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+}
+
+.images{
+    margin-bottom: 20px;
+    align-self: center;
+}
+.images img{
+    align-self: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+.comment{
+    padding: 10px;
+    text-align: center;
+}

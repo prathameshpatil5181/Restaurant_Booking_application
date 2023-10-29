@@ -1,11 +1,16 @@
-import MainNavigation from './MainNavigation';
-import classes from './Layout.module.css';
-
+import MainNavigation from "./MainNavigation";
+import classes from "./Layout.module.css";
+import HomePageBody from "../HomePage/HomePageBody";
+import FamousDestinations from "../HomePage/FamousDestinations";
+import Dots from "../ui/Dots";
 function Layout(props) {
   return (
-    <div>
+    <div className={classes.borderClass}>
       <MainNavigation />
-      <main className={classes.main}>{props.children}</main>
+     
+      <main className={classes.main}>
+      {props.children}
+      </main>
     </div>
   );
 }

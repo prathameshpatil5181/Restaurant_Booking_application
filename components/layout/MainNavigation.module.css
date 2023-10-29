@@ -1,39 +1,55 @@
-.header {
+
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Oleo+Script:wght@700&display=swap');
+
+
+
+
+.main{
+  padding: 0 300px 0 300px;
+  position: absolute;
+  z-index: 1;
   width: 100%;
-  height: 5rem;
+}
+
+
+.navigation{
+  display: grid;
+  flex-direction: row;
+  width: 100%;
+  grid-template-columns: 1fr 2fr 1fr;
+  height: 10vh;
+}
+.logo{
+  justify-self: flex-start;
+  align-self: center;
+  font-family: 'Oleo Script';
+  font-size: 24px;
+  color: #FFFFFF;
+}
+.ulitems{
+  justify-self: center;
+  align-self: center; 
+}
+.listitems{
+  font-family: 'Baloo 2';
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #77002e;
-  padding: 0 10%;
+  flex-direction: row;
+  align-self: center;
+  color: #FFFFFF;
+  gap:3vw;
+}
+.active{
+  color: rgb(255, 183, 0);
+}
+.end{
+  justify-self: flex-end;
+  align-self: center;
 }
 
-.logo {
-  font-size: 2rem;
-  color: white;
-  font-weight: bold;
-}
-
-.header ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: baseline;
-}
-
-.header li {
-  margin-left: 3rem;
-}
-
-.header a {
-  text-decoration: none;
-  font-size: 1.5rem;
-  color: #fcb8d2;
-}
-
-.header a:hover,
-.header a:active,
-.header a.active {
-  color: white;
+.end button{
+  background-color: rgb(198 198 198 / 40%);
+  padding:10px 20px 10px 20px;
+  border-radius: 20px;
+  font-family: 'Baloo 2';
+  font-weight: 50px;
 }

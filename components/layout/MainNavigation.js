@@ -1,22 +1,30 @@
-import classes from './MainNavigation.module.css';
-import Link from 'next/link';
+import classes from "./MainNavigation.module.css";
+import Link from "next/link";;
 function MainNavigation() {
-
   return (
-    <header className={classes.header}>
-      <div className={classes.logo}>React Meetups</div>
-      <nav>
-        <ul>
-          <li>
-            <Link href='/'>All Meetups</Link>
-          </li>
-          <li>
-            <Link href='/New-meetup'>Add New Meetup</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <div className={classes.main}>
+        <nav className={classes.navigation}>
+          <div className={classes.logo}>Hotelmania</div>
+          <div className={classes.ulitems}>
+            <ul className={classes.listitems}>
+              <li className={classes.active}>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/Login">Hotels</Link>
+              </li>
+              <li>
+                <Link href="/">Contact us</Link>
+              </li>
+            </ul>
+          </div>
+          <div className={classes.end}>
+            <Link href='/'><button>Login/Sign Up</button></Link>
+          </div>
+        </nav>
+    </div>
   );
+  // lets
 }
 
 export default MainNavigation;

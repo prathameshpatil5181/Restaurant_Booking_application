@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+
+.main {
+  background-image: url("../../public/loginBackground.jpg");
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+}
+.form {
+  font-family: "Abril Fatface", serif;
+  background-color: rgba(255, 255, 255, 0.407);
+  padding: 4vw;
+  display: grid;
+  grid-template-columns: 9fr 1fr 9fr;
+  height: 65vh;
+  width: 50vw;
+  border-radius: 20px;
+}
+.form ul {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.form ul li {
+  border: none;
+  width: 80%;
+  border-bottom: 1px solid white;
+}
+.form ul li input {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+}
+.line {
+  height: 80%;
+  width: 0.2%;
+  background-color: white;
+  box-sizing: border-box;
+  align-self: center;
+}
+.credentials {
+  align-self: left;
+  padding-bottom: 3vh;
+}
+.credentials button {
+  background-color: rgba(255, 255, 255, 0.609);
+  border-radius: 15px;
+  width: fit-content;
+  padding: 1vh 3vw 1vh 3vw;
+  align-self: center;
+}
+.text {
+  padding: 4vw;
+  align-self: center;
+  font-size: 25px;
+
+  color: white;
+}
+.form ul li input::placeholder {
+  color: rgba(255, 255, 255, 0.639);
+}
+.options ul {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 100%;
+
+  column-gap: 0;
+}
+
+.options ul li {
+  border: none;
+  font-size: 15px;
+  color: white;
+}
+
+.form ul li input:focus {
+  outline: none; /* Remove the default outline */
+  border-bottom: 2px solid rgb(255, 255, 255);
+}
+
