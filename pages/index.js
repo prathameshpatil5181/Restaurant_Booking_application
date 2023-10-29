@@ -3,6 +3,7 @@ import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 import MeetupList from "../components/meetups/MeetupList";
 import { MongoClient } from "mongodb";
+import HomePageBody from "@/components/HomePage/HomePageBody";
 
 const DUMMY_MEETUPS = [
   {
@@ -31,7 +32,7 @@ export default function Home(props) {
       <title>Restaurant Booking</title>
       <meta name='description' />
     </Head>
-      <MeetupList meetups={props.restos} />
+      <HomePageBody/>
     </div>
   );
 }

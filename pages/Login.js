@@ -1,8 +1,9 @@
+import LoginPage from "@/components/LoginPage/LoginPage";
 import NewMeetupForm from "@/components/meetups/NewMeetupForm"
 import { useRouter } from "next/router";
 
 
-const NewMeetup = () => {
+const Login = () => {
 
   const router = useRouter();
 
@@ -25,9 +26,9 @@ const NewMeetup = () => {
 
   return (
     <div>
-      <NewMeetupForm onAddMeetup={addRestoHandler}/>
+      <LoginPage/>
     </div>
   )
 }
 
-export default NewMeetup
+export default Login;

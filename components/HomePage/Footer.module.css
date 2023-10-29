@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Mohave:wght@300&family=Oleo+Script:wght@700&display=swap');
+
+
+
+.main{
+    background-color: white;
+    padding:  2.5vh 10vw 2.5vh 10vw ;
+    height:50vh
+}
+.title{
+    font-family: 'oleo Script';
+    font-size: 2vw;
+    margin-bottom: 2vh;
+}
+.menuItem {
+    font-family: 'Mohave';
+    display: flex;
+    gap:50vw;
+}
+.menuItem ul li{
+    margin-bottom: 1.5vh;
+}
+.social {
+    margin: 1vh 0 0 0 ;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 1vw;
+    
+}
+.social li{
+    align-self: center;
+    justify-self: center;
+}

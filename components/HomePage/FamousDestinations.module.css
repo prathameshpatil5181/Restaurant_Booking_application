@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Fjalla+One&family=Roboto:wght@300&display=swap");
+
+.destination {
+  align-self: center;
+  display: flex;
+  color: white;
+  width: 50vw;
+  height: auto;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 5%);
+}
+.information {
+  padding: 60px;
+}
+.image {
+  height: 43vh;
+  width: 85vw;
+  border-radius: 15px 0 0 15px;
+}
+
+.description {
+  font-family: "Roboto", sans-serif;
+  text-align: left;
+}
+
+.title {
+  font-family: "Fjalla One", sans-serif;
+  font-size: 1.5vw;
+  margin-bottom: 40px;
+}
