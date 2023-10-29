@@ -1,7 +1,7 @@
 import MainNavigation from "./MainNavigation";
 import classes from "./Layout.module.css";
 import HomePageBody from "../HomePage/HomePageBody";
-import FamousDestinations from "../HomePage/FamousDestinations";
+import FamousDestinations from "../HomePage/FamousDestinaition/FamousDestinations";
 import Dots from "../ui/Dots";
 function Layout(props) {
   return (
