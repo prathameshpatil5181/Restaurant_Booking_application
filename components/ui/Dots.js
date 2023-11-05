@@ -5,7 +5,7 @@ const Dots = (props) => {
     <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
       {props.length &&
         [...Array(props.length).keys()].map((item) => (
-          <button
+          <button key={item}
             className={`${
               props.pointerPlace === item ? classes.glow : ""
             } ${classes.dot}`}

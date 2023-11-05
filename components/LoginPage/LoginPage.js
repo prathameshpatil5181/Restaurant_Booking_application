@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./LoginPage.module.css";
 import Link from "next/link";
+
+const emailValid = (email)=>{
+  return email.includes('@');
+}
+
 const LoginPage = () => {
 
-  
+  const [email,setEmail] = useState('');
+  const [isEmailValid,setIsEmailValid]=useState(true);
+  const [isEmailTouched,setIsEmailTouched] = useState(false);
 
+  const emailChangeHandler = (event)=>{
+    setIsEmailTouched(true);
+    setEmail(event.target.value);
+    setIsEmailValid(emailValid(event.target.value));
+    console.log(event.target.value);
+  }
 
   return (
     <div className={classes.main}>
@@ -20,8 +33,10 @@ const LoginPage = () => {
           <form className={classes.credentials}>
             <ul>
               <li>
-                <input type="text" placeholder="Username" />
+                <input type="text" placeholder="Username" onChange={emailChangeHandler} value={email}/>
+                
               </li>
+              <li>{isEmailTouched&&isEmailValid?<p>Please enter valid email</p>:''}</li>
               <li>
                 <input type="text" placeholder="Password" />
               </li>
