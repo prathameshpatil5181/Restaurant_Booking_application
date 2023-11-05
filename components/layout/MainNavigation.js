@@ -1,6 +1,9 @@
 import classes from "./MainNavigation.module.css";
-import Link from "next/link";;
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 function MainNavigation() {
+  const router = useRouter();
+
   return (
     <div className={classes.main}>
         <nav className={classes.navigation}>
@@ -11,7 +14,7 @@ function MainNavigation() {
                 <Link href="/">Home</Link>
               </li>
               <li>
-                <Link href="/Login">Hotels</Link>
+                <Link href="/">Hotels</Link>
               </li>
               <li>
                 <Link href="/">Contact us</Link>
@@ -19,7 +22,7 @@ function MainNavigation() {
             </ul>
           </div>
           <div className={classes.end}>
-            <Link href='/'><button>Login/Sign Up</button></Link>
+            <button onClick={()=>router.push('/Login')}>Login/Sign Up</button>
           </div>
         </nav>
     </div>
