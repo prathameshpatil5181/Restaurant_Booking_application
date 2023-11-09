@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+.text{
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.image{
+    filter: blur(1px);
+}

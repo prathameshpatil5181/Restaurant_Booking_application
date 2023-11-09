@@ -14,7 +14,7 @@ function MainNavigation() {
                 <Link href="/">Home</Link>
               </li>
               <li>
-                <Link href="/">Hotels</Link>
+                <Link href="/Hotels">Hotels</Link>
               </li>
               <li>
                 <Link href="/">Contact us</Link>

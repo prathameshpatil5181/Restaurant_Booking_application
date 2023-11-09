@@ -1,0 +1,11 @@
+.main{
+   width: 100%;
+   padding: 150px 250px 0 250px;
+   display: flex;
+   justify-content: center;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 200px;
+}
