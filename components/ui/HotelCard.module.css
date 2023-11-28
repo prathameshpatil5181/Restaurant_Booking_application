@@ -1,4 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap');
+
+.main{
+    background: rgb(255,255,255);
+    background: linear-gradient(186deg, rgba(255,255,255,0.20441118341867992) 0%, rgba(255,255,255,0) 100%);
+    display: flex;
+    color: white;
+    height:100%;
+    margin-bottom: 50px;
+    border-radius: 20px;
+}
 .image{
     height:400px;
     width:500px;
+    border-radius: 20px 5px 5px 20px;
 }
+.moveBottom{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    flex-direction: column;
+    padding:20px;
+    width: 100%;
+    flex-grow: 1;
+}
+.description{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    gap:6px;
+}
+.name h1{
+    font-family: 'Ropa Sans', sans-serif;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.address ul{
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+}
+.addText{
+    font-size: 25px;
+}
+
+.Services ul{
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+}
+
+.bill {
+    align-self:flex-end;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 190%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  
+  .bill button {
+    justify-self: flex-end;
+    margin-right: 20px;
+    font-size:80%;
+    border: 1px solid white;
+    border-radius: 20px;
+    padding:3px 25px 3px 25px;
+    color: black;
+    background-color: #D9D9D9;
+    margin-right: 80px;
+  }
