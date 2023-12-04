@@ -3,7 +3,7 @@ import classes from "./HotelCard.module.css";
 import Location from "./Location";
 const HotelCard = () => {
 
-const HOTEL_PICS = ["hotel1.jpg","hotel2.jpg","hotel3.jpg","hotel4.jpg","hotel5.jpg","hotel6.jpg"]
+const HOTEL_PICS = ["hotel1.jpg","hotel2.jpg","hotel3.jpg","hotel4.jpg","hotel5.jpg","hotel6.jpg"];
 
 
   return (
@@ -12,7 +12,7 @@ const HOTEL_PICS = ["hotel1.jpg","hotel2.jpg","hotel3.jpg","hotel4.jpg","hotel5.
         <img src="/hotels/hotel1.jpg" className={classes.image} />
       </div>
       
-      <div classes={classes.images}><img src='/hotels/hotel1.jpg' className={classes.other}></img></div>
+      {/* <div classes={classes.images}><img src='/hotels/hotel1.jpg' className={classes.other}></img></div> */}
       <div className={classes.moveBottom}>
 
         <div className={classes.description}>

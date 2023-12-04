@@ -1,9 +1,6 @@
 import React from "react";
 import classes from "./HomePageBody.module.css";
-import Image from "next/image";
-import Dots from "../ui/Dots";
 import FamousDestinations from "./FamousDestinaition/FamousDestinations";
-import Footer from "./Footer";
 import CommentComp from "../ui/CommentComp";
 import Header from "./Header";
 const HomePageBody = () => {
@@ -27,9 +24,6 @@ const HomePageBody = () => {
       <div className={classes.comment}>
         <CommentComp />
         <CommentComp />
-      </div>
-      <div>
-        <Footer />
       </div>
     </main>
   );

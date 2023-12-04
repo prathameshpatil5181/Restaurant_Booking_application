@@ -20,7 +20,9 @@ const HotelPage = () => {
       </div>
       <div>
         <HotelCard/>
+        <HotelCard/>
       </div>
+      
     </div>
   )
 }

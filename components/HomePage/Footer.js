@@ -12,7 +12,7 @@ const Footer = () => {
           <li>Email</li>
         </ul>
         <ul >
-          <li className={classes.menuItem}>Follow Me</li>
+          <li className={classes.menuItem}>Follow Us</li>
           <li>
             <ul className={classes.social}>
                 <li><Image src='/facbook.svg' height={30} width={30}/></li>

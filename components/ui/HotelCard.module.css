@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:wght@600&display=swap');
 
 .main{
     background: rgb(255,255,255);
@@ -38,6 +38,8 @@
     align-self: center;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    gap:10px;
 }
 .addText{
     font-size: 25px;
