@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:wght@600&display=swap');
+
+.main{
+    font-family: 'Montserrat', sans-serif;
+    width:100%;
+    min-height: 100%;
+    color:#ffffffba;
+}
+.address ul{
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:10px
+}
+.addText{
+    font-size: 20px;
+}
+.lineClass{
+    height:1px;
+    width:100%;
+    background-color:white;
+    z-index: 1;
+    border-radius: 50px;
+}
+.Gradientcard{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.room{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.room button{
+    background-color: transparent;
+    height: 30px;
+    width: 30px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* .room input{
+    background-color: transparent;
+    color: white;
+    width: 30px;
+    scroll-behavior: auto;
+} */
+

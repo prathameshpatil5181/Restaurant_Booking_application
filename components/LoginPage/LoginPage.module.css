@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
 
 .main {
-  background-image: url("../../public/loginBackground.jpg");
+  background: linear-gradient(rgba(21, 21, 21, 0.5), rgba(0, 0, 0, 0.5)), url("../../public/loginBackground.jpg");
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,11 +27,16 @@
 .form ul li {
   border: none;
   width: 80%;
-  border-bottom: 1px solid white;
+  
 }
-.form ul li input {
+.credentials ul li input {
   background-color: rgba(255, 255, 255, 0);
   color: white;
+  width:100%;
+  border-bottom: 1px solid white;
+}
+.credentials ul li input:focus {
+  outline: none; /* Remove the default outline */
 }
 .line {
   height: 80%;
@@ -75,8 +80,4 @@
   color: white;
 }
 
-.form ul li input:focus {
-  outline: none; /* Remove the default outline */
-  border-bottom: 2px solid rgb(255, 255, 255);
-}
 

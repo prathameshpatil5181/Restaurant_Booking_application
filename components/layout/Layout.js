@@ -1,18 +1,21 @@
 import MainNavigation from "./MainNavigation";
 import classes from "./Layout.module.css";
 import HomePageBody from "../HomePage/HomePageBody";
-import FamousDestinations from "../HomePage/FamousDestinaition/FamousDestinations";
-import Dots from "../ui/Dots";
 import Footer from "../HomePage/Footer";
+import { usePathname } from "next/navigation";
 function Layout(props) {
+  const pathName = usePathname();
   return (
+    <div className={classes.layoutMain}>
+    <MainNavigation />
     <div className={classes.borderClass}>
-      <MainNavigation />
       <main className={classes.main}>
       {props.children}
       </main>
-  <Footer/>
+      {pathName==='/Login'||pathName==="/Signup"?'': <Footer/>} 
     </div>
+  </div>    
+
   );
 }
 

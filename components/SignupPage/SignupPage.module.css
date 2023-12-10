@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abril+Nunito+Fatface&display=swap");
 
 .main {
-  background-image: url("../../public/loginBackground.jpg");
+  background: linear-gradient(rgba(21, 21, 21, 0.5), rgba(21, 21, 21, 0.5)), url("../../public/loginBackground.jpg");
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,11 +27,12 @@
 .form ul li {
   border: none;
   width: 80%;
-  border-bottom: 1px solid rgb(255, 255, 255);
 }
 .form ul li input {
   background-color: rgba(255, 255, 255, 0);
   color: white;
+  width:100%;
+  border-bottom: 1px solid white;
 }
 .line {
   height: 80%;
@@ -73,5 +74,10 @@
 
 .form ul li input:focus {
   outline: none; /* Remove the default outline */
-  border-bottom: 2px solid rgb(255, 255, 255);
+}
+
+.form ul li div{
+  color: rgb(177 0 0 / 75%);
+  font-family: 'Nunito',sans-serif;
+  font-size: 13px;
 }

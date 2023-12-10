@@ -1,24 +1,23 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import classes from "./LoginPage.module.css";
 import Link from "next/link";
+import { userAgent } from "next/server";
 
-const emailValid = (email)=>{
-  return email.includes('@');
-}
+
+const emailValid = (email) => {
+  return email.includes("@");
+};
 
 const LoginPage = () => {
 
-  const [email,setEmail] = useState('');
-  const [isEmailValid,setIsEmailValid]=useState(true);
-  const [isEmailTouched,setIsEmailTouched] = useState(false);
+ const emailRef = useRef();
+ const passwordRef = useRef();
 
-  const emailChangeHandler = (event)=>{
-    setIsEmailTouched(true);
-    setEmail(event.target.value);
-    setIsEmailValid(emailValid(event.target.value));
-    console.log(event.target.value);
-  }
-
+const formSubmitHandler = (e)=>{
+  e.preventDefault();
+  console.log(emailRef.current.value);
+  console.log(passwordRef.current.value);
+}
   return (
     <div className={classes.main}>
       <div className={classes.form}>
@@ -29,18 +28,20 @@ const LoginPage = () => {
             justifyContent: "center",
             alignItems: "left",
           }}
-        >
-          <form className={classes.credentials}>
+                >
+          <form className={classes.credentials} onSubmit={formSubmitHandler}>
             <ul>
               <li>
-                <input type="text" placeholder="Username" onChange={emailChangeHandler} value={email}/>
-                
+                <input
+                  type="text"
+                  placeholder="Username"
+                  ref={emailRef}
+                />
               </li>
-              <li>{isEmailTouched&&isEmailValid?<p>Please enter valid email</p>:''}</li>
               <li>
-                <input type="text" placeholder="Password" />
+                <input type="text" placeholder="Password" ref={passwordRef} />
               </li>
-              <button>Login</button>
+              <button type="submit">Login</button>
             </ul>
           </form>
           <div className={classes.options}>
@@ -53,7 +54,10 @@ const LoginPage = () => {
           </div>
         </div>
         <div className={classes.line}></div>
-        <div className={classes.text}><p>Welcome Back</p><p>Login to Continue</p> </div>
+        <div className={classes.text}>
+          <p>Welcome Back</p>
+          <p>Login to Continue</p>{" "}
+        </div>
       </div>
     </div>
   );

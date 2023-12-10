@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./HotelHeaderImages.module.css";
 import { useState } from "react";
 const HotelHeaderImages = () => {
-  const [bigImage, setBigImage] = useState(3);
+  const [bigImage, setBigImage] = useState(false);
   const HOTEL_PICS = [
     "hotel1.jpg",
     "hotel2.jpg",
@@ -11,25 +11,39 @@ const HotelHeaderImages = () => {
     "hotel5.jpg",
     "hotel6.jpg",
   ];
-  const imageOnclickHandler = (index) => {
-    setBigImage(index);
+  console.log('hii');
 
+  const imageOnclickHandler = (index) => {
+    setBigImage(true);
   };
+  
+
   return (
     <div className={classes.main}>
       <div className={classes.innerClass}>
-        {HOTEL_PICS.map((pic, index) => (
-          <img
-            key={index}
-            className={
-              index === bigImage ? classes.bigImageClass : classes.imageClass
-            }
-            src={`/hotels/${pic}`}
-            alt={`Hotel ${index + 1}`}
-            onClick={() => imageOnclickHandler(index)}
-          />
-        ))}
+        <img
+          src={`/hotels/${HOTEL_PICS[0]}`}
+          className={
+            bigImage ?classes.bigImageClassAnime2:classes.imageClass 
+          }
+        ></img>
+        <img
+          src={`/hotels/${HOTEL_PICS[1]}`}
+          className={
+            bigImage ? classes.bigImageClassAnime : classes.bigImageClass
+          }
+          alt="image"
+        ></img>
+        <img
+          src={`/hotels/${HOTEL_PICS[2]}`}
+          className={
+            bigImage ?classes.bigImageClassAnime3:classes.imageClass 
+          }
+          alt="image"
+          onClick={imageOnclickHandler}
+        ></img>
       </div>
+      {/* <button onClick={imageOnclickHandler}>Activate</button> */}
     </div>
   );
 };

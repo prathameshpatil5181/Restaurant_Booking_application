@@ -1,6 +1,4 @@
 
-
-
   @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&family=Abril+Fatface&display=swap");
   
 
@@ -24,22 +22,12 @@
   font-size: 30px;
 }
 
-@media only screen and (max-width: 600px) {
-  .destHeader {
-    width: 100%;
-    text-align: center;
-    color: white;
-    font-family: "Roboto", sans-serif;
-    font-size: 2vh;
-  }
-}
 .numbers{
   align-self: center;
   display:flex;
   flex-direction: row;
   gap :400px;
   padding-bottom: 10vh;
- 
 }
 .cont{
   color: white;

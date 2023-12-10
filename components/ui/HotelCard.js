@@ -1,20 +1,39 @@
 import React from "react";
 import classes from "./HotelCard.module.css";
 import Location from "./Location";
+import StarRating from "./StarRating";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 const HotelCard = () => {
+  const HOTEL_PICS = [
+    "hotel1.jpg",
+    "hotel2.jpg",
+    "hotel3.jpg",
+    "hotel4.jpg",
+    "hotel5.jpg",
+    "hotel6.jpg",
+  ];
 
-const HOTEL_PICS = ["hotel1.jpg","hotel2.jpg","hotel3.jpg","hotel4.jpg","hotel5.jpg","hotel6.jpg"];
-
-
+  const router = useRouter();
+  const [mainImage,setMainImage] = useState(HOTEL_PICS[0])
+  const imageClick=(imageString)=>{
+    setMainImage(imageString)
+  }
   return (
     <div className={classes.main}>
       <div className={classes.mainImage}>
-        <img src="/hotels/hotel1.jpg" className={classes.image} />
+        <img src={`/hotels/${mainImage}`} className={classes.image} />
       </div>
-      
-      {/* <div classes={classes.images}><img src='/hotels/hotel1.jpg' className={classes.other}></img></div> */}
+      <div className={classes.images}>
+        {[...Array(6)].map((pic, index) => (
+          <img
+            src={`/hotels/${HOTEL_PICS[index]}`}
+            alt="image"
+            onClick={()=>{imageClick(HOTEL_PICS[index])}}
+          ></img>
+        ))}
+      </div>
       <div className={classes.moveBottom}>
-
         <div className={classes.description}>
           <div className={classes.name}>
             <h1>THE TAJ</h1>
@@ -29,9 +48,8 @@ const HOTEL_PICS = ["hotel1.jpg","hotel2.jpg","hotel3.jpg","hotel4.jpg","hotel5.
             </ul>
           </div>
 
-
           <div className={classes.rating}>
-            <h1>5</h1>
+            <StarRating Fixed={5} />
           </div>
 
           <div className={classes.Services}>
@@ -42,16 +60,12 @@ const HOTEL_PICS = ["hotel1.jpg","hotel2.jpg","hotel3.jpg","hotel4.jpg","hotel5.
               <li>Free WIFI</li>
             </ul>
           </div>
-
         </div>
-
 
         <div className={classes.bill}>
           <div>₹ 5000</div>
-          <button>Book</button>
+          <button onClick={()=>{router.push('/Hotels/1')}}>Book</button>
         </div>
-
-
       </div>
     </div>
   );

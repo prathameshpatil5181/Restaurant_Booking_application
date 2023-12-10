@@ -31,7 +31,7 @@
   margin-bottom: 20px;
 }
 
-.formFeilds ul li input:focus{
+.formFeilds form input:focus{
     outline: none;
 }
 .upload{

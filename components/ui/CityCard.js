@@ -25,11 +25,12 @@ const CityCard = (props) => {
       <img
         src={`./${props.src}`}
         style={{
-          height: `${props.height}px`,
-          width: `${props.width}px`,
+          height: `${props.height}vw`,
+          width: `${props.width}vw`,
           position: "relative",
           filter: `blur(${props.blur ? props.blur+'px' : "0px"})`,
-          opacity:props.opacity
+          opacity:props.opacity,
+          borderRadius:'20px'
         }}
       ></img>
     </div>

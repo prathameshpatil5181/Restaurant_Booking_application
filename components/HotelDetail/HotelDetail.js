@@ -6,6 +6,8 @@ import Location from "../ui/Location";
 import StarRating from "../ui/StarRating";
 import Comment from "../ui/Comment";
 import Button from "../ui/Button";
+import Link from "next/link";
+
 const HotelDetail = () => {
   const FormatDate = (dateString) => {
     const date = new Date(dateString);
@@ -63,7 +65,7 @@ const HotelDetail = () => {
               historic charm and modern luxury."
             </div>
           </div>
-          <Button marginTop={'20px'} >Book Now</Button>
+         <Link href='/TestModel'><Button marginTop={'20px'} >Book Now</Button></Link>
         </GradientCard>
       </div>
       <div className={classes.amenities}>

@@ -5,10 +5,11 @@
 
 
 .main{
-  padding: 0 300px 0 300px;
+  padding: 0 10vw 0 10vw;
   position: absolute;
   z-index: 1;
   width: 100%;
+  
 }
 
 
@@ -46,8 +47,21 @@
   align-self: center;
 }
 
+.buttonActive{
+  justify-self: flex-end;
+  align-self: center;
+}
+
 .end button{
   background-color: rgb(198 198 198 / 40%);
+  padding:10px 20px 10px 20px;
+  border-radius: 20px;
+  font-family: 'Baloo 2';
+  font-weight: 50px;
+}
+
+.buttonActive button{
+  background-color: rgb(255, 183, 0);
   padding:10px 20px 10px 20px;
   border-radius: 20px;
   font-family: 'Baloo 2';
