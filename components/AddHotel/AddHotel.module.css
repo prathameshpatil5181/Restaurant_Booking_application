@@ -47,3 +47,11 @@
     margin-top: 20px;
     border: 1px solid white;
 }
+
+.upload input[type='file']{
+  display: none;
+}
+
+.upload label{
+  cursor: pointer;
+}

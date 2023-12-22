@@ -1,12 +1,7 @@
 import React, { useRef } from "react";
 import classes from "./LoginPage.module.css";
 import Link from "next/link";
-import { userAgent } from "next/server";
 
-
-const emailValid = (email) => {
-  return email.includes("@");
-};
 
 const LoginPage = () => {
 

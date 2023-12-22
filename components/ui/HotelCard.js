@@ -1,9 +1,12 @@
-import React from "react";
+import { useState } from "react";
 import classes from "./HotelCard.module.css";
+import { uiActions } from "@/Store/uiSlice";
+import { compareActions } from "@/Store/CompareSlice";
+import { useDispatch } from "react-redux";
 import Location from "./Location";
 import StarRating from "./StarRating";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 const HotelCard = () => {
   const HOTEL_PICS = [
     "hotel1.jpg",
@@ -13,7 +16,8 @@ const HotelCard = () => {
     "hotel5.jpg",
     "hotel6.jpg",
   ];
-
+  const dispatch = useDispatch();
+  const isVisible = useSelector(state=>state.ui.isVisible)
   const router = useRouter();
   const [mainImage,setMainImage] = useState(HOTEL_PICS[0])
   const imageClick=(imageString)=>{
@@ -64,6 +68,8 @@ const HotelCard = () => {
 
         <div className={classes.bill}>
           <div>₹ 5000</div>
+          {isVisible?<button onClick={()=>{dispatch(compareActions.removeHotels(1))}}>Remove</button>:<button onClick={()=>{dispatch(compareActions.addHotels(1))}}>Add</button>}
+          
           <button onClick={()=>{router.push('/Hotels/1')}}>Book</button>
         </div>
       </div>

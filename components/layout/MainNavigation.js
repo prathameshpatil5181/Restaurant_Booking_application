@@ -1,9 +1,14 @@
 import classes from "./MainNavigation.module.css";
 import Link from "next/link";
 import { useRouter,usePathname } from "next/navigation";
+import { uiActions } from "@/Store/uiSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 function MainNavigation() {
   const router = useRouter();
-  const pathName = usePathname()
+  const pathName = usePathname();
+  const count = useSelector(state=>state.compare.count)
+  const dispatch = useDispatch(uiActions);
   return (
     <div className={classes.main}>
         <nav className={classes.navigation}>
@@ -21,8 +26,9 @@ function MainNavigation() {
               </li>
             </ul>
           </div>
-          <div className={pathName==='/Login' || pathName==='/Signup'?classes.buttonActive:classes.end}>
+          <div className={pathName==='/Login' || pathName==='/Signup'?classes.buttonActive:classes.end} style={{}}>
             <button onClick={()=>router.push('/Login')}>Login/Sign Up</button>
+            <button onClick={()=>(dispatch(uiActions.toggle()))}>cart&nbsp; {count}</button>
           </div>
         </nav>
     </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Header.module.css";
 import Dots from "../ui/Dots";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
 const Header = () => {
   const imageArray = [
@@ -16,33 +17,39 @@ const Header = () => {
   const changePhotoHandler = (pointer) => {
     setImage(imageArray[pointer]);
     setPointerPlace(pointer);
-    pointer=pointer;
+    pointer = pointer;
   };
 
   useState(() => {
     const timer = setInterval(() => {
-      if (pointer > 3) {
+      if (pointer > imageArray.length - 1) {
         pointer = 0;
       }
       setImage(imageArray[pointer]);
       setPointerPlace(pointer);
       pointer++;
+    }, 5000);
 
-    }, 7000);
-
-    return ()=>clearInterval(timer);
-
-  }, [imageArray,setImage,setPointerPlace]);
+    return () => clearInterval(timer);
+  }, [imageArray, setImage, setPointerPlace]);
 
   return (
     <div>
-      <div className={classes.mainClass}>
-        <img
-          src={image}
-          alt="Picture of the author"
-          className={classes.imageClases}
-        />
-      </div>
+      <AnimatePresence>
+        <div className={classes.mainClass}>
+          <motion.img
+            key={image}
+            initial={{ x: -100 }}
+            animate={{ x: 0 }}
+            exit={{ x: 100 }}
+            dragElastic={0}f
+            transition={{ duration: 0.5 }}
+            src={image}
+            alt="Picture of the author"
+            className={classes.imageClases}
+          />
+        </div>
+      </AnimatePresence>
       <div className={classes.title}>Explore from Million's</div>
       <div className={classes.description}>
         “Welcome to our oasis of comfort and luxury, where every stay is a
@@ -55,7 +62,11 @@ const Header = () => {
         transcends the ordinary."
       </div>
       <div className={classes.changeDots}>
-        <Dots length={imageArray.length} pointerPlace={pointerPlace} onClick={changePhotoHandler} />
+        <Dots
+          length={imageArray.length}
+          pointerPlace={pointerPlace}
+          onClick={changePhotoHandler}
+        />
       </div>
     </div>
   );

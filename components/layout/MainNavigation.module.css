@@ -3,20 +3,17 @@
 
 
 
-
 .main{
+  position: fixed;
   padding: 0 10vw 0 10vw;
-  position: absolute;
-  z-index: 1;
+  z-index: 50;
   width: 100%;
-  
 }
 
 
 .navigation{
   display: grid;
   flex-direction: row;
-  width: 100%;
   grid-template-columns: 1fr 2fr 1fr;
   height: 10vh;
 }
@@ -45,11 +42,17 @@
 .end{
   justify-self: flex-end;
   align-self: center;
+    display: flex;
+    flex-direction: row;
+    gap:10px;
 }
 
 .buttonActive{
   justify-self: flex-end;
   align-self: center;
+  display: flex;
+    flex-direction: row;
+    gap:10px;
 }
 
 .end button{

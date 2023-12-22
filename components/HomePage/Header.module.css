@@ -9,6 +9,7 @@
     height: 80vh;
     width: 100%;
     opacity: 70%;
+    overflow-x:hidden ;
   }
   .title {
     font-family: "lobster";

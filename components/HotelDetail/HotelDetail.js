@@ -7,7 +7,10 @@ import StarRating from "../ui/StarRating";
 import Comment from "../ui/Comment";
 import Button from "../ui/Button";
 import Link from "next/link";
-
+import { useDispatch } from "react-redux";
+import { uiActions } from "@/Store/uiSlice";
+import { AnimatePresence } from "framer-motion"; 
+import TestComp from "./testComp";
 const HotelDetail = () => {
   const FormatDate = (dateString) => {
     const date = new Date(dateString);
@@ -18,10 +21,13 @@ const HotelDetail = () => {
 
     return formattedDate;
   };
+
+  const dispatch = useDispatch();
   return (
     <div className={classes.main}>
       <div>
-        <HotelHeaderImages />
+        <AnimatePresence><TestComp /></AnimatePresence>
+        
       </div>
       <div>
         <GradientCard
