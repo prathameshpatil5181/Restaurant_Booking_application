@@ -1,8 +1,10 @@
 import React from "react";
 import classes from "./CityCard.module.css";
+import { motion } from "framer-motion";
 const CityCard = (props) => {
   return (
     <div
+
       style={{
         height: "fit-content",
         width: "fit-content",
@@ -22,8 +24,12 @@ const CityCard = (props) => {
       >
         {props.name.toUpperCase()}
       </div>
-      <img
+      <motion.img
         src={`./${props.src}`}
+        initial={{opacity:0}}
+        animate={{opacity:1,transition:{duration:1,type:'spring'}}}
+        transition={{duration:0.1}}
+        whileHover={{ scale: 1.1, transition:{type:'spring'} } }
         style={{
           height: `${props.height}vw`,
           width: `${props.width}vw`,
@@ -32,7 +38,7 @@ const CityCard = (props) => {
           opacity:props.opacity,
           borderRadius:'20px'
         }}
-      ></img>
+      />
     </div>
   );
 };

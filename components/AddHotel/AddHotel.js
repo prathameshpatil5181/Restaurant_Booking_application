@@ -53,6 +53,7 @@ const AddHotel = () => {
                 {imageFiles.length > 0
                   ? imageFiles.map((file, index) => (
                       <img
+                      key={index}
                         src={file}
                         alt={`'image'${index}`}
                         className=" h-32 w-60 m-2 rounded-md"

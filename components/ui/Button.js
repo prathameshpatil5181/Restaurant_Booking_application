@@ -13,6 +13,7 @@ const Button = (props) => {
           borderRadius: "20px",
           marginTop:`${props.marginTop?props.marginTop:'0px'}`
         }}
+        onClick={props.onClick}
       >
         {props.children}
       </button>

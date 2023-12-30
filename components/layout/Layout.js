@@ -4,23 +4,21 @@ import HomePageBody from "../HomePage/HomePageBody";
 import Footer from "../HomePage/Footer";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
-import HotelModel from "../Models/HotelModel";
-import { uiActions } from "@/Store/uiSlice";
+import { AnimatePresence } from "framer-motion";
 function Layout(props) {
   const pathName = usePathname();
   const visible = useSelector(state=>state.ui.isVisible)
   return (
     <div className={classes.layoutMain}>
-      {visible?<div className="absolute z-10"><HotelModel/></div>:''}
-      <div className={`${visible?'blur z-0':''}`} 
-      >
         <MainNavigation />
+        <AnimatePresence>
         <div className={classes.borderClass} style={{padding:pathName === "/Login" || pathName === "/Signup" ? "" : "13vh 10vw 0 10vw"}}>
           <main className={classes.main}>{props.children}</main>
         </div>
           {pathName === "/Login" || pathName === "/Signup" ? "" : <Footer />}
+        </AnimatePresence>
       </div>
-    </div>
+
   );
 }
 

@@ -1,72 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Oleo+Script:wght@700&family=Nunito&display=swap");
 
-  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Oleo+Script:wght@700&display=swap');
-
-
-
-.main{
+.main {
   position: fixed;
   padding: 0 10vw 0 10vw;
   z-index: 50;
   width: 100%;
 }
 
-
-.navigation{
+.navigation {
   display: grid;
   flex-direction: row;
   grid-template-columns: 1fr 2fr 1fr;
   height: 10vh;
+  position: relative;
 }
-.logo{
+.logo {
   justify-self: flex-start;
   align-self: center;
-  font-family: 'Oleo Script';
+  font-family: "Oleo Script";
   font-size: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
-.ulitems{
+.ulitems {
   justify-self: center;
-  align-self: center; 
+  align-self: center;
 }
-.listitems{
-  font-family: 'Baloo 2';
+.listitems {
+  font-family: "Baloo 2";
   display: flex;
   flex-direction: row;
   align-self: center;
-  color: #FFFFFF;
-  gap:3vw;
+  color: #ffffff;
+  gap: 3vw;
 }
-.active{
+.active {
   color: rgb(255, 183, 0);
 }
-.end{
-  justify-self: flex-end;
-  align-self: center;
-    display: flex;
-    flex-direction: row;
-    gap:10px;
-}
-
-.buttonActive{
+.end {
   justify-self: flex-end;
   align-self: center;
   display: flex;
-    flex-direction: row;
-    gap:10px;
+  flex-direction: row;
+  gap: 10px;
 }
 
-.end button{
+.buttonActive {
+  justify-self: flex-end;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  
+}
+
+.end button {
   background-color: rgb(198 198 198 / 40%);
-  padding:10px 20px 10px 20px;
+  padding: 10px 20px 10px 20px;
   border-radius: 20px;
-  font-family: 'Baloo 2';
+  font-family: "Baloo 2";
   font-weight: 50px;
+  width: 100%;
 }
 
-.buttonActive button{
+.buttonActive button {
   background-color: rgb(255, 183, 0);
-  padding:10px 20px 10px 20px;
+  padding: 10px 20px 10px 20px;
   border-radius: 20px;
-  font-family: 'Baloo 2';
+  font-family: "Baloo 2";
   font-weight: 50px;
+  width: 100%;
 }

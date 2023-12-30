@@ -19,6 +19,26 @@
   width: 70vw;
   border-radius: 20px 5px 5px 20px;
 }
+.images {
+  height: inherit;
+  overflow-y: auto;
+  width: 22vw;
+  scrollbar-width: none;
+}
+.images img {
+  height: 6vw;
+  width: 8.5vw;
+  margin: 4px;
+  border-radius: 10px;
+}
+.mainImage{
+  height: 25vw;
+  width: 70vw;
+  z-index:1;
+}
+.images::-webkit-scrollbar {
+  display: none;
+}
 .moveBottom {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -75,22 +95,5 @@
   background-color: #d9d9d9;
   margin-right: 80px;
 }
-.images{
-    height:inherit;
-    overflow-y: auto;
-    width: 22vw;
-    scrollbar-width: none;
-}
-.images img {
-  height: 6vw;
-  width: 8.5vw;
-  margin:4px;
-  border-radius: 10px;
-}
 
-.images::-webkit-scrollbar {
-    display: none;  
-  }
-  
-  /* Hide the scrollbar on Firefox */
-
+/* Hide the scrollbar on Firefox */
