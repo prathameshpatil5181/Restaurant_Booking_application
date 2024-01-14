@@ -1,8 +1,6 @@
 import classes from "./MainNavigation.module.css";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { uiActions } from "@/Store/uiSlice";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ProfileSvg from "../ui/ProfileSvg";
 import { AnimatePresence, motion } from "framer-motion";

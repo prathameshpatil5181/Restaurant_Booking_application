@@ -5,6 +5,8 @@
   padding: 0 10vw 0 10vw;
   z-index: 50;
   width: 100%;
+  background-color: black;
+  border-radius: 5%;
 }
 
 .navigation {

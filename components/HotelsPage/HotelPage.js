@@ -4,7 +4,7 @@ import classes from "./HotelPage.module.css";
 import CityCard from "../ui/CityCard";
 import HotelCard from "../ui/HotelCard";
 import Link from "next/link";
-import SearchBar from "../ui/SearchBar";
+import SearchBar from "./SearchBar";
 import Pagination from "../ui/Pagination";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
