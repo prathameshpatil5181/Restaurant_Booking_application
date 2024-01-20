@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { AuthActions } from "@/Store/AuthSlice";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { LoginUser } from "@/Store/authCreators";
 const LoginPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -21,7 +22,7 @@ const LoginPage = () => {
       console.log(emailRef.current.value);
       console.log(passwordRef.current.value);
       dispatch(
-        AuthActions.setLoggeedIn({
+        LoginUser({
           email: emailRef.current.value,
           password: passwordRef.current.value,
         })

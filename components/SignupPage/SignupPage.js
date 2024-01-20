@@ -3,12 +3,11 @@ import classes from "./SignupPage.module.css";
 import Link from "next/link";
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { AuthActions } from "@/Store/AuthSlice";
 import { EmailValidation, debounce, passwordValidation } from "@/utils/util";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
-import { storeUser } from "@/Store/authCreators";
+import storeUser from "@/Store/authCreators";
 //signup functional component
 
 const SignupPage = () => {
@@ -30,7 +29,7 @@ const SignupPage = () => {
 
 
 
-  //hanlers
+  //handlers
 
   const emailChangeHandler = debounce((event) => {
     setEmail((prevstate) => {
@@ -63,7 +62,7 @@ const SignupPage = () => {
     console.log(email.value);
     console.log(password.value);
     if(password.isPasswordValid && email.isEmailValid && nameRef.current.value!='' && nameRef.current.value!=' '){
-      dispatch(
+    dispatch(
         storeUser({
             name: nameRef.current.value,
             email: email.value,
@@ -76,14 +75,6 @@ const SignupPage = () => {
     }
     
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      route.push("/");
-    } else {
-      console.log('Error in logging');
-    }
-  }, [isLoggedIn, route]);
 
   return (
     <div className={classes.main}>

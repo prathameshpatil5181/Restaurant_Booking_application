@@ -14,9 +14,11 @@ const AuthSlice = createSlice({
   },
   reducers: {
     addUser(state, action) {
-      console.log("here2");
       if (state.users.find((user) => user.email === action.payload.email)) {
         console.log("user already exist");
+        return {
+          error:'user aleready exist'
+        }
       } else {
         state.users.push({
           name: action.payload.name,
@@ -28,19 +30,20 @@ const AuthSlice = createSlice({
         console.log("user created");  
       }
     },
-    setLoggeedIn(state, action) {
-      const userAvailable = state.users.find(
-        (user) =>
-          user.email === action.payload.email &&
-          user.password === action.payload.password
-      );
-      if (userAvailable) {
-        state.isLoggedIn = true;
-        console.log("login success");
-      } else {
-        state;
-        console.log("login failed");
-      }
+    setLoggedIn(state, action) {
+      // const userAvailable = state.users.find(
+      //   (user) =>
+      //     user.email === action.payload.email &&
+      //     user.password === action.payload.password
+      // );
+      // if (userAvailable) {
+      //   state.isLoggedIn = true;
+      //   console.log("login success");
+      // } else {
+      //   state;
+      //   console.log("login failed");
+      // }
+      state.isLoggedIn = true;
     },
     setLogOut(state, action) {
       state.isLoggedIn = false;

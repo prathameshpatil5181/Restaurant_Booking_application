@@ -14,5 +14,7 @@ export default async function handler(req,res){
         client.close();
 
         res.status(result.status).json({msg:'Data Inserted'});
+
+
     }
 }
