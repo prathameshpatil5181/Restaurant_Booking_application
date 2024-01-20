@@ -45,7 +45,7 @@ const OptionModel = ({ showModal, setShowModal }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showModal]);
+  }, [showModal,setShowModal]);
 
   return (
     <div
@@ -77,7 +77,7 @@ const OptionModel = ({ showModal, setShowModal }) => {
             variants={listVarients}
             onClick={() => {
               setShowModal(false);
-              dispatch(AuthActions.setLoggeedIn("logout"));
+              dispatch(AuthActions.setLogOut());
             }}
           >
             Logout

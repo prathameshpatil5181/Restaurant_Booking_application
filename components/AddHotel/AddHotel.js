@@ -3,6 +3,8 @@ import classes from "./AddHotel.module.css";
 import Button from "../ui/Button";
 import UploadSvg from "../ui/UploadSvg";
 import { AnimatePresence, motion } from "framer-motion";
+
+
 const AddHotel = () => {
   const [imageFiles, setImageFiles] = useState([]);
 
@@ -17,6 +19,12 @@ const AddHotel = () => {
   const modelRef = useRef();
   const [options, setOptions] = useState(allOptions);
   const searchRef = useRef();
+
+
+// setting up the variables for the validation
+const HotelNameRef = useRef();
+
+
   const removeHandler = (itemToRemove) => {
     setSelected((prevSelected) =>
       prevSelected.filter((item) => item !== itemToRemove)
@@ -53,6 +61,7 @@ const AddHotel = () => {
     setOptions(searchResult);
   };
 
+
   useEffect(() => {
     // Event listener to handle clicks outside the modal
     const handleClickOutside = (event) => {
@@ -76,6 +85,9 @@ const AddHotel = () => {
     };
   }, [model]);
 
+
+
+
   const showImages = (e) => {
     let imageUrls = [];
     for (let i = 0; i < e.target.files.length; i++) {
@@ -84,20 +96,50 @@ const AddHotel = () => {
     setImageFiles(imageUrls);
   };
 
+
+
+  const checkNonEmpty = (value, feild) => {
+    if (value != " " || value != "") return false;
+    return true;
+  };
+
+  const formSubmitHandler = (e)=>{
+      e.preventDefault();
+
+
+
+  }
+
   return (
     <div className={classes.main}>
       <div className={classes.form}>
         <Button>List Your Hotel</Button>
         <div className={classes.formFeilds}>
-          <form>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name"></input>
+          <form onSubmit={formSubmitHandler}>
+            <label htmlFor="name" >Name</label>
+            <input type="text" id="name" onChange={(e)=>{
+              
+            }}></input>
 
             <label htmlFor="address">Address</label>
-            <input type="text" id="address" placeholder="Address line 1"></input>
+            <input
+              type="text"
+              id="address"
+              placeholder="Address line 1"
+            ></input>
             <div className="flex flex-row w-full gap-2">
-                <input type="text" id="address" placeholder="City" className="grow"></input>
-                <input type="text" id="address" placeholder="Country"  className="grow"></input>
+              <input
+                type="text"
+                id="address"
+                placeholder="City"
+                className="grow"
+              ></input>
+              <input
+                type="text"
+                id="address"
+                placeholder="Country"
+                className="grow"
+              ></input>
             </div>
 
             <label htmlFor="facility">Facilities</label>
@@ -131,29 +173,28 @@ const AddHotel = () => {
                 />
               </div>
               <AnimatePresence>
-              {model && options.length > 0 ? (
-                <motion.div 
-                
-                initial={{opacity:0}}
-                animate={{opacity:1,transition:{delay:0.1}}}
-                exit = {{opacity:0,transition:{delay:0.1}}} 
-                
-                className="flex flex-row absolute bg-white p-2 gap-2 rounded-md ">
-                  {options.map((item, index) => {
-                    return (
-                      <div
-                        className="flex flex-row bg-slate-600 rounded-md gap-2 p-1 cursor-pointer"
-                        key={index}
-                      >
-                        <div onClick={() => addHandler(item)}>{item}</div>
-                      </div>
-                    );
-                  })}
-                </motion.div>
-              ) : (
-                ""
-              )}
-            </AnimatePresence>
+                {model && options.length > 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { delay: 0.1 } }}
+                    exit={{ opacity: 0, transition: { delay: 0.1 } }}
+                    className="flex flex-row absolute bg-white p-2 gap-2 rounded-md "
+                  >
+                    {options.map((item, index) => {
+                      return (
+                        <div
+                          className="flex flex-row bg-slate-600 rounded-md gap-2 p-1 cursor-pointer"
+                          key={index}
+                        >
+                          <div onClick={() => addHandler(item)}>{item}</div>
+                        </div>
+                      );
+                    })}
+                  </motion.div>
+                ) : (
+                  ""
+                )}
+              </AnimatePresence>
             </div>
             <label htmlFor="desc">Description</label>
             <input type="text" id="desc"></input>
@@ -176,6 +217,7 @@ const AddHotel = () => {
             <div className="flex flex-row overflow-scroll no-scrollbar scroll-smooth ">
               {imageFiles.length > 0
                 ? imageFiles.map((file, index) => (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       key={index}
                       src={file}

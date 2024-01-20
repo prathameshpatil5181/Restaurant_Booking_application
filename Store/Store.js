@@ -4,7 +4,11 @@ import CompareSlice from "./CompareSlice";
 import AuthSlice from "./AuthSlice";
 
 const store = configureStore({
-    reducer:{ui:uiSlice.reducer,compare:CompareSlice.reducer,auth:AuthSlice.reducer}
-})
+  reducer: {
+    ui: uiSlice.reducer,
+    compare: CompareSlice.reducer,
+    auth: AuthSlice.reducer,
+  },
+});
 
 export default store;
