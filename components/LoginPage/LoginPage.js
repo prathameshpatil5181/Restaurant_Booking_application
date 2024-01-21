@@ -1,4 +1,4 @@
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import classes from "./LoginPage.module.css";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const route = useRouter();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+  const loginMessage = useSelector(state=>state.auth.loginMessage)
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -31,15 +31,6 @@ const LoginPage = () => {
       setFeilds(true);
     }
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      route.push("/");
-    } else {
-      console.log('Error in logging');
-    }
-  }, [isLoggedIn, route]);
-
 
   const Variants = {
     hidden: {
@@ -66,6 +57,23 @@ const LoginPage = () => {
     },
   };
 
+  useEffect(()=>{
+    if(isLoggedIn && loginMessage==='success' ){
+      route.push('/');
+    }
+  },[isLoggedIn,loginMessage]);
+
+
+  useEffect(()=>{
+    const setUpLogin = ()=>{
+      dispatch(AuthActions.setLoginMessage({
+        status:'pass',
+        message:''
+      }));
+    }
+    setUpLogin();
+  },[]);
+
   return (
     <motion.div
       className={classes.main}
@@ -84,6 +92,27 @@ const LoginPage = () => {
             alignItems: "left",
           }}
         >
+          <AnimatePresence>
+            {!isLoggedIn && loginMessage!=''&& loginMessage!='success' && (
+              <motion.div
+                className="error w-fit bg-white p-[0.5vw] rounded-md text-red-500 text-sm mb-2"
+                initial={{
+                  opacity: 0,
+                  height: "0%",
+                }}
+                animate={{
+                  opacity: 1,
+                  height: "fit-content",
+                }}
+                exit={{
+                  opacity: 0,
+                  height: "0%",
+                }}
+              >
+                <p className=" font-sans">{loginMessage}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <form className={classes.credentials} onSubmit={formSubmitHandler}>
             <ul>
               <li>

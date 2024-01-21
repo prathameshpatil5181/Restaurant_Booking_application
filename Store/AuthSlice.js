@@ -3,51 +3,41 @@ const AuthSlice = createSlice({
   name: "authSlice",
   initialState: {
     isLoggedIn: false,
-    users: [
-      {
-        name: "newname",
-        email: "123@123.123",
-        password: "A@123456",
-        Permissions: ["users"],
-      },
-    ],
+    loginMessage:'',
+    signup:{
+      isSignedUp:true,
+      signUpMessage:"",
+    }
   },
   reducers: {
-    addUser(state, action) {
-      if (state.users.find((user) => user.email === action.payload.email)) {
-        console.log("user already exist");
-        return {
-          error:'user aleready exist'
-        }
-      } else {
-        state.users.push({
-          name: action.payload.name,
-          email: action.payload.email,
-          password: action.payload.password,
-          Permissions: ["users"],
-        });
-        state.isLoggedIn = true;
-        console.log("user created");  
+    setLoggedIn(state) {
+      state.isLoggedIn = true;
+      state.loginMessage = 'success';
+    },
+    setLogOut(state) {
+      state.isLoggedIn = false;
+      state.loginMessage = '';
+    },
+    setSignupMessage(state,action){
+      state.signup.signUpMessage = action.payload.message;
+      if(action.payload.status==='error'){
+        state.signup.isSignedUp=false;
+      }
+      else{
+        state.signup.isSignedUp=true;
       }
     },
-    setLoggedIn(state, action) {
-      // const userAvailable = state.users.find(
-      //   (user) =>
-      //     user.email === action.payload.email &&
-      //     user.password === action.payload.password
-      // );
-      // if (userAvailable) {
-      //   state.isLoggedIn = true;
-      //   console.log("login success");
-      // } else {
-      //   state;
-      //   console.log("login failed");
-      // }
-      state.isLoggedIn = true;
-    },
-    setLogOut(state, action) {
-      state.isLoggedIn = false;
-    },
+    setLoginMessage(state,action){
+      if(action.payload.status==='success'){
+        state.isLoggedIn = true;
+        state.loginMessage = 'success';
+
+      }
+      else{
+        state.isLoggedIn = false;
+        state.loginMessage = action.payload.message;
+      }
+    }
   },
 });
 

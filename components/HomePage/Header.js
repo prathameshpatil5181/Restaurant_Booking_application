@@ -42,7 +42,7 @@ const Header = () => {
             initial={{ x: -100 }}
             animate={{ x: 0 }}
             exit={{ x: 100 }}
-            dragElastic={0}f
+            dragElastic={0}
             transition={{ duration: 0.5 }}
             src={image}
             alt="Picture of the author"

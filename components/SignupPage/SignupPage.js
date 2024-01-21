@@ -1,4 +1,4 @@
-import React, {useEffect}from "react";
+import React, { useEffect } from "react";
 import classes from "./SignupPage.module.css";
 import Link from "next/link";
 import { useState, useRef } from "react";
@@ -6,15 +6,17 @@ import { useDispatch } from "react-redux";
 import { EmailValidation, debounce, passwordValidation } from "@/utils/util";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-
+import { AnimatePresence, motion } from "framer-motion";
+import { AuthActions } from "@/Store/AuthSlice";
 import storeUser from "@/Store/authCreators";
 //signup functional component
 
 const SignupPage = () => {
   //hooks declaraition
   const route = useRouter();
-  const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
   const nameRef = useRef();
+  const signup = useSelector((state) => state.auth.signup);
+
   const [email, setEmail] = useState({
     value: "",
     isEmailValid: false,
@@ -26,8 +28,6 @@ const SignupPage = () => {
     isPasswordValid: { value: false, error: null },
     isPasswordTouched: false,
   });
-
-
 
   //handlers
 
@@ -61,20 +61,39 @@ const SignupPage = () => {
     console.log(nameRef.current.value);
     console.log(email.value);
     console.log(password.value);
-    if(password.isPasswordValid && email.isEmailValid && nameRef.current.value!='' && nameRef.current.value!=' '){
-    dispatch(
+    if (
+      password.isPasswordValid &&
+      email.isEmailValid &&
+      nameRef.current.value != "" &&
+      nameRef.current.value != " "
+    ) {
+      dispatch(
         storeUser({
-            name: nameRef.current.value,
-            email: email.value,
-            password: password.value,
+          name: nameRef.current.value,
+          email: email.value,
+          password: password.value,
         })
       );
+
+    } else {
+      console.log("error in signing up");
     }
-    else{
-      console.log('error in signing up');
-    }
-    
   };
+
+  const setSignup = () => {
+    console.log('here');
+    dispatch(
+      AuthActions.setSignupMessage({
+        status: "Done",
+        message: "",
+      })
+    );
+  };
+
+  useEffect(() => {
+    setSignup(); // Corrected to call the function
+  }, []); // Empty dependency array to run the effect only once on mount
+
 
   return (
     <div className={classes.main}>
@@ -87,6 +106,27 @@ const SignupPage = () => {
             alignItems: "left",
           }}
         >
+          <AnimatePresence>
+            {!signup.isSignedUp && (
+              <motion.div
+                className="error w-fit bg-white p-[0.5vw] rounded-md text-red-500 text-sm mb-2"
+                initial={{
+                  opacity: 0,
+                  height: "0%",
+                }}
+                animate={{
+                  opacity: 1,
+                  height: "fit-content",
+                }}
+                exit={{
+                  opacity: 0,
+                  height: "0%",
+                }}
+              >
+                <p className=" font-sans">{signup.signUpMessage}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <form className={classes.credentials} onSubmit={submitFormHandler}>
             <ul>
               <li>
@@ -123,7 +163,9 @@ const SignupPage = () => {
           <div className={classes.options}>
             <ul>
               <Link href="/Login">
-                <li>Login</li>
+                <li>
+                  <button>Login</button>
+                </li>
               </Link>
             </ul>
           </div>

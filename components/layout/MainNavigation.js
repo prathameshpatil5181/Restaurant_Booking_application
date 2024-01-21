@@ -5,11 +5,14 @@ import { useSelector } from "react-redux";
 import ProfileSvg from "../ui/ProfileSvg";
 import { AnimatePresence, motion } from "framer-motion";
 import {  useState} from "react";
+import { ModelActions } from "@/Store/ModelSlice";
+import { useDispatch } from "react-redux";
 import OptionModel from "./OptionModel";
 
 function MainNavigation() { 
   const router = useRouter();
   const pathName = usePathname();
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [showModal, setShowModal] = useState(false);
 
@@ -50,6 +53,9 @@ function MainNavigation() {
             }
             style={{}}
           >
+            <button onClick={()=>{dispatch(ModelActions.toggleModel())}}>
+              onToggle
+            </button>
             {isLoggedIn ? (
               <motion.button
                 key="profile-button"

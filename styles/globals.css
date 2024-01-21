@@ -25,6 +25,7 @@
 body {
   background-color: #010101;
   width: 100%;
+  overflow: 'auto';
 }
 
 @layer base {
