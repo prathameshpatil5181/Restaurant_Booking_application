@@ -6,7 +6,7 @@ import HotelCard from "../ui/HotelCard";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import Pagination from "../ui/Pagination";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 const CITIS = [
   { image: "paris.jpg", name: "paris" },
@@ -17,18 +17,18 @@ const CITIS = [
   { image: "london.jpg", name: "london" },
 ];
 
+const HotelData = [];
+
 const HotelPage = () => {
   const [page, setPage] = useState(1);
   const changePageHandler = () => {
-    setPage((prevState)=>{
-     
-        return prevState + 1;
+    setPage((prevState) => {
+      return prevState + 1;
     });
     window.scrollTo({
-      top: '550',
-      behavior: 'smooth' // Smooth scrolling effect
+      top: "550",
+      behavior: "smooth", // Smooth scrolling effect
     });
-  
   };
 
   const hotelCardVarients = {
@@ -48,6 +48,41 @@ const HotelPage = () => {
       staggerChildren: -0.1,
     },
   };
+
+  const getHotels = async () => {
+    try {
+      const response = await fetch(
+        "https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel.json",
+        {
+          method: "GET",
+        }
+      );
+
+      const json = await response.json();
+        console.log(json);  
+      for (let key in json) {
+        console.log(key);
+        HotelData.push({
+          key: key,
+          name: key.name,
+          address: key.address,
+          city: key.city,
+          country: key.country,
+          description: key.description,
+          imageUrls: key.imageUrls,
+          facilities: key.facilities,
+        });
+      }
+
+      console.log(HotelData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getHotels();
+  }, []);
 
   return (
     <div className={classes.main}>
@@ -75,12 +110,14 @@ const HotelPage = () => {
           animate="animate"
           exit="exit"
         >
-          {page && Array.from({ length: page }, (_, index) => index).map((pageNo, index) => (
-              <motion.div key={index} variants={hotelCardVarients}>
-                <HotelCard />
-              </motion.div>
-            ))
-          }
+          {page &&
+            Array.from({ length: page }, (_, index) => index).map(
+              (pageNo, index) => (
+                <motion.div key={index} variants={hotelCardVarients}>
+                  <HotelCard />
+                </motion.div>
+              )
+            )}
         </motion.div>
       </AnimatePresence>
       <div className="m-2">
