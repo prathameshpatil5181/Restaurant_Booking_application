@@ -4,6 +4,28 @@ import Button from "../ui/Button";
 import UploadSvg from "../ui/UploadSvg";
 import { AnimatePresence, motion } from "framer-motion";
 
+///------------------------------------------------------------
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDKqxAZfIafBBBtnLiyV3-jyIouYvU6UVU",
+  authDomain: "hotelmania-7bfd0.firebaseapp.com",
+  databaseURL: "https://hotelmania-7bfd0-default-rtdb.firebaseio.com",
+  projectId: "hotelmania-7bfd0",
+  storageBucket: "hotelmania-7bfd0.appspot.com",
+  messagingSenderId: "918277547814",
+  appId: "1:918277547814:web:3f2a7f22a02e944e7903e7",
+};
+
+const app = initializeApp(firebaseConfig);
+
+export const setUpFirebase = async () => {
+  const app = initializeApp(firebaseConfig);
+};
+
+///------------------------------------------------------------
 
 const AddHotel = () => {
   const [imageFiles, setImageFiles] = useState([]);
@@ -20,10 +42,16 @@ const AddHotel = () => {
   const [options, setOptions] = useState(allOptions);
   const searchRef = useRef();
 
+  //inputfeild refs
+  const namRef = useRef();
+  const addressRef = useRef();
+  const cityRef = useRef();
+  const countryRef = useRef();
+  const descriptionRef = useRef();
+  const imageUrls = [];
 
-// setting up the variables for the validation
-const HotelNameRef = useRef();
-
+  // setting up the variables for the validation
+  const HotelNameRef = useRef();
 
   const removeHandler = (itemToRemove) => {
     setSelected((prevSelected) =>
@@ -61,7 +89,6 @@ const HotelNameRef = useRef();
     setOptions(searchResult);
   };
 
-
   useEffect(() => {
     // Event listener to handle clicks outside the modal
     const handleClickOutside = (event) => {
@@ -85,30 +112,91 @@ const HotelNameRef = useRef();
     };
   }, [model]);
 
-
-
-
-  const showImages = (e) => {
-    let imageUrls = [];
-    for (let i = 0; i < e.target.files.length; i++) {
-      imageUrls.push(URL.createObjectURL(e.target.files[i]));
-    }
-    setImageFiles(imageUrls);
-  };
-
-
-
   const checkNonEmpty = (value, feild) => {
     if (value != " " || value != "") return false;
     return true;
   };
 
-  const formSubmitHandler = (e)=>{
-      e.preventDefault();
+  const showImages = (e) => {
+    let imageUrls = [];
+    for (let i = 0; i < e.target.files.length; i++) {
+      imageUrls.push({
+        name: e.target.files[i].name,
+        size: e.target.files[i].size,
+        image: e.target.files[i],
+        url: URL.createObjectURL(e.target.files[i]),
+      });
+    }
+    setImageFiles(imageUrls);
+  };
 
+  const sendToserver = async () => {
+    try {
+      // Handle your POST request logic here
+      const storage = getStorage();
 
+      // Perform actions with the image data (e.g., upload to Firebase Storage)
+      imageFiles.map(async (imagesFile, index) => {
+        const imageRef = ref(
+          storage,
+          `hotels/${
+            namRef.current.value != "" ? namRef.current.value : "test"
+          }/${imagesFile.name}`
+        );
+        await uploadBytes(imageRef, imagesFile.image).then((snapshot) => {
+          console.log("Uploaded a blob or file!");
+          getDownloadURL(snapshot.ref).then((val) => {
+            console.log(val);
+            console.log("uploaded succesfully");
+            imageUrls.push(val);
+          });
+        });
+      });
 
-  }
+      if (
+        namRef.current.value &&
+        addressRef.current.value &&
+        cityRef.current.value &&
+        countryRef.current.value &&
+        descriptionRef.current.value &&
+        imageUrls.length > 0
+      ) {
+
+        const response  =  await fetch("https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel.json",{
+          method:"POST",
+          body: JSON.stringify({
+            name: namRef.current.value,
+            address: addressRef.current.value,
+            city: cityRef.current.value,
+            country: countryRef.current.value,
+            description: descriptionRef.current.value,
+            imageUrls: imageUrls,
+            facilities:selected
+          })
+          
+        })
+        
+        const json = response.json();
+        console.log(json);
+        
+      } else {
+        // Your logic when any of the refs does not have a value or imageUrls is empty
+        console.log("Some fields are empty or imageUrls is empty");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+  //submit handler
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await sendToserver();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={classes.main}>
@@ -116,16 +204,17 @@ const HotelNameRef = useRef();
         <Button>List Your Hotel</Button>
         <div className={classes.formFeilds}>
           <form onSubmit={formSubmitHandler}>
-            <label htmlFor="name" >Name</label>
-            <input type="text" id="name" onChange={(e)=>{
-              
-            }}></input>
+            <label htmlFor="name">
+              Name
+            </label>
+            <input type="text" id="name"  ref={namRef}></input>
 
             <label htmlFor="address">Address</label>
             <input
               type="text"
               id="address"
               placeholder="Address line 1"
+              ref={addressRef}
             ></input>
             <div className="flex flex-row w-full gap-2">
               <input
@@ -133,12 +222,14 @@ const HotelNameRef = useRef();
                 id="address"
                 placeholder="City"
                 className="grow"
+                ref={cityRef}
               ></input>
               <input
                 type="text"
                 id="address"
                 placeholder="Country"
                 className="grow"
+                ref={descriptionRef}
               ></input>
             </div>
 
@@ -220,7 +311,7 @@ const HotelNameRef = useRef();
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       key={index}
-                      src={file}
+                      src={file.url}
                       alt={`'image'${index}`}
                       className=" h-32 w-60 m-2 rounded-md"
                     />
@@ -231,8 +322,8 @@ const HotelNameRef = useRef();
               <input type="checkbox" />
               <label>Terms & Conditions</label>
             </div>
+            <button type="submit">Submit</button>
           </form>
-          <Button>Submit</Button>
         </div>
       </div>
     </div>
