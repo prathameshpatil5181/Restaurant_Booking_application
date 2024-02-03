@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import UploadSvg from "../ui/UploadSvg";
 import { useDispatch,useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
+<<<<<<< HEAD
 
 ///------------------------------------------------------------
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -26,6 +27,10 @@ const app = initializeApp(firebaseConfig);
 export const setUpFirebase = async () => {
   const app = initializeApp(firebaseConfig);
 };
+=======
+import { useDispatch } from "react-redux";
+import { sendToserver } from "@/Store/FormCreator";
+>>>>>>> ae789c003749a41dccde046612062adc0c4fa4a0
 
 ///------------------------------------------------------------
 
@@ -43,14 +48,13 @@ const AddHotel = () => {
   const modelRef = useRef();
   const [options, setOptions] = useState(allOptions);
   const searchRef = useRef();
-
+  const dispatch = useDispatch();
   //inputfeild refs
   const namRef = useRef();
   const addressRef = useRef();
   const cityRef = useRef();
   const countryRef = useRef();
   const descriptionRef = useRef();
-  const imageUrls = [];
 
   // setting up the variables for the validation
   const HotelNameRef = useRef();
@@ -134,18 +138,24 @@ const AddHotel = () => {
 
   //submit handler
   const formSubmitHandler = async (e) => {
+<<<<<<< HEAD
     e.preventDefault();
 
     if(!isLoggedIn){
       console.log("loginFirst")
       return;
     }
+=======
+    console.log("form submit handler");
+    e.preventDefault();
+>>>>>>> ae789c003749a41dccde046612062adc0c4fa4a0
     if (
       namRef.current.value &&
       addressRef.current.value &&
       cityRef.current.value &&
       countryRef.current.value &&
       descriptionRef.current.value &&
+<<<<<<< HEAD
       imageFiles.length >0
     ) {
         dispatch(
@@ -161,6 +171,31 @@ const AddHotel = () => {
         );
     } else {
       console.log("someIssue");
+=======
+      imageFiles.length>0
+    ) {
+      dispatch(
+        sendToserver({
+          name: namRef.current.value,
+          address: addressRef.current.value,
+          city: cityRef.current.value,
+          country: countryRef.current.value,
+          description: descriptionRef.current.value,
+          imageFiles: imageFiles,
+          facilities: selected,
+        })
+      );
+    } else {
+      console.log("Name:", namRef.current.value);
+      console.log("Address:", addressRef.current.value);
+      console.log("City:", cityRef.current.value);
+      console.log("Country:", countryRef.current.value);
+      console.log("Description:", descriptionRef.current.value);
+      console.log(imageFiles.length);
+      console.log("Facilities:", selected);
+
+      console.log("error in sending");
+>>>>>>> ae789c003749a41dccde046612062adc0c4fa4a0
     }
   };
 
@@ -251,7 +286,13 @@ const AddHotel = () => {
                 )}
               </AnimatePresence>
             </div>
+<<<<<<< HEAD
             <label htmlFor="desc">Description</label>
+=======
+            <label htmlFor="desc" >
+              Description
+            </label>
+>>>>>>> ae789c003749a41dccde046612062adc0c4fa4a0
             <input type="text" id="desc" ref={descriptionRef}></input>
 
             <div className={classes.upload}>
