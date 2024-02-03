@@ -9,16 +9,8 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 const HotelCard = (props) => {
-  const HOTEL_PICS = [
-    "hotel1.jpg",
-    "hotel2.jpg",
-    "hotel3.jpg",
-    "hotel4.jpg",
-    "hotel5.jpg",
-    "hotel6.jpg",
-  ];
   const router = useRouter();
-  const [mainImage, setMainImage] = useState(HOTEL_PICS[0]);
+  const [mainImage, setMainImage] = useState(props.hotel.images[0]);
   const imageClick = (imageString) => {
     setMainImage(imageString);
   };
@@ -61,7 +53,7 @@ const HotelCard = (props) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            src={`${props.hotel.images[0]}`}
+            src={mainImage}
             className={classes.image}
           />
         </AnimatePresence>
@@ -88,7 +80,7 @@ const HotelCard = (props) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 1 } }}
             onClick={() => {
-              imageClick(HOTEL_PICS[index]);
+              imageClick(pic);
             }}
           ></motion.img>
         ))}
