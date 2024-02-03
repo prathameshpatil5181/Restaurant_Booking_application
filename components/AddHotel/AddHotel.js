@@ -2,12 +2,14 @@ import React, { useRef, useEffect, useState } from "react";
 import classes from "./AddHotel.module.css";
 import Button from "../ui/Button";
 import UploadSvg from "../ui/UploadSvg";
+import { useDispatch,useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
 ///------------------------------------------------------------
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 import { initializeApp } from "firebase/app";
+import { sendToserver } from "@/Store/authCreators";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDKqxAZfIafBBBtnLiyV3-jyIouYvU6UVU",
@@ -52,6 +54,10 @@ const AddHotel = () => {
 
   // setting up the variables for the validation
   const HotelNameRef = useRef();
+
+  //dispatch dec
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state=>state.auth.isLoggedIn)
 
   const removeHandler = (itemToRemove) => {
     setSelected((prevSelected) =>
@@ -112,10 +118,6 @@ const AddHotel = () => {
     };
   }, [model]);
 
-  const checkNonEmpty = (value, feild) => {
-    if (value != " " || value != "") return false;
-    return true;
-  };
 
   const showImages = (e) => {
     let imageUrls = [];
@@ -130,71 +132,35 @@ const AddHotel = () => {
     setImageFiles(imageUrls);
   };
 
-  const sendToserver = async () => {
-    try {
-      // Handle your POST request logic here
-      const storage = getStorage();
+  //submit handler
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
 
-      // Perform actions with the image data (e.g., upload to Firebase Storage)
-      imageFiles.map(async (imagesFile, index) => {
-        const imageRef = ref(
-          storage,
-          `hotels/${
-            namRef.current.value != "" ? namRef.current.value : "test"
-          }/${imagesFile.name}`
-        );
-        await uploadBytes(imageRef, imagesFile.image).then((snapshot) => {
-          console.log("Uploaded a blob or file!");
-          getDownloadURL(snapshot.ref).then((val) => {
-            console.log(val);
-            console.log("uploaded succesfully");
-            imageUrls.push(val);
-          });
-        });
-      });
-
-      if (
-        namRef.current.value &&
-        addressRef.current.value &&
-        cityRef.current.value &&
-        countryRef.current.value &&
-        descriptionRef.current.value &&
-        imageUrls.length > 0
-      ) {
-
-        const response  =  await fetch("https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel.json",{
-          method:"POST",
-          body: JSON.stringify({
+    if(!isLoggedIn){
+      console.log("loginFirst")
+      return;
+    }
+    if (
+      namRef.current.value &&
+      addressRef.current.value &&
+      cityRef.current.value &&
+      countryRef.current.value &&
+      descriptionRef.current.value &&
+      imageFiles.length >0
+    ) {
+        dispatch(
+          sendToserver({
             name: namRef.current.value,
             address: addressRef.current.value,
             city: cityRef.current.value,
             country: countryRef.current.value,
             description: descriptionRef.current.value,
-            imageUrls: imageUrls,
-            facilities:selected
+            imageFiles: imageFiles,
+            facilities: selected,
           })
-          
-        })
-        
-        const json = response.json();
-        console.log(json);
-        
-      } else {
-        // Your logic when any of the refs does not have a value or imageUrls is empty
-        console.log("Some fields are empty or imageUrls is empty");
-      }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
-  //submit handler
-  const formSubmitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      await sendToserver();
-
-    } catch (error) {
-      console.log(error);
+        );
+    } else {
+      console.log("someIssue");
     }
   };
 
@@ -204,10 +170,8 @@ const AddHotel = () => {
         <Button>List Your Hotel</Button>
         <div className={classes.formFeilds}>
           <form onSubmit={formSubmitHandler}>
-            <label htmlFor="name">
-              Name
-            </label>
-            <input type="text" id="name"  ref={namRef}></input>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" ref={namRef}></input>
 
             <label htmlFor="address">Address</label>
             <input
@@ -229,7 +193,7 @@ const AddHotel = () => {
                 id="address"
                 placeholder="Country"
                 className="grow"
-                ref={descriptionRef}
+                ref={countryRef}
               ></input>
             </div>
 
@@ -288,7 +252,7 @@ const AddHotel = () => {
               </AnimatePresence>
             </div>
             <label htmlFor="desc">Description</label>
-            <input type="text" id="desc"></input>
+            <input type="text" id="desc" ref={descriptionRef}></input>
 
             <div className={classes.upload}>
               <div>Upload Images</div>

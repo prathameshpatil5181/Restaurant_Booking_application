@@ -1,26 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ModelActions } from "@/Store/ModelSlice";
+import Loading from "../SVG/Loading";
+import { AnimatePresence, motion } from "framer-motion";
 const Model = (props) => {
   const dispatch = useDispatch();
   const closeToggle = () => {
-    dispatch(ModelActions.toggleModel());
+    dispatch(ModelActions.toggleModel({ message: " " }));
   };
-  //   useState(()=>{
-  //     const setScrollNone = () => {
-  //       console.log('setScrollNone');
-  //       const body = document.getElementsByTagName("body")[0];
-  //       body.style.overflow = 'hidden';
-  //     };
-
-  //     setScrollNone();
-
-  //     // Clean up the effect if necessary
-  //     return () => {
-  //       const body = document.getElementsByTagName("body")[0];
-  //       body.style.overflow = ''; // Reset the style when the component is unmounted
-  //     };
-  //   },[]);
+  const message = useSelector((state) => state.model.message);
 
   return (
     <div
@@ -28,16 +16,29 @@ const Model = (props) => {
       style={{}}
       onClick={closeToggle}
     >
-      <div
-        className="h-fit w-fit bg-[rgba(0,0,0,0.5)] rounded-lg text-white z-20 backdrop-blur-sm flex flex-col
+      <AnimatePresence>
+        <motion.div
+          initial={{
+            y: "-500%",
+            opacity: 0,
+          }}
+          animate={{
+            y: "0%",
+            opacity: 1,
+          }}
+          exit={{
+            y: "-500%",
+            opacity: 0,
+          }}
+          className="h-fit w-fit bg-[rgba(0,0,0,0.5)] rounded-lg text-white z-20 backdrop-blur-sm flex flex-col
       p-5  
       "
-      >
-        <div>
-          This is Test Model
-          <button>Close</button>
-        </div>
-      </div>
+        >
+          <div>
+            {message === "Loading" ? <Loading /> : "This is Test Model"}
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

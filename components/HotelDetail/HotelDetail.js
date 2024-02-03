@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HotelHeaderImages from "./HotelHeaderImages";
 import classes from "./HotelDetail.module.css";
 import GradientCard from "../ui/GradientCard";
@@ -9,8 +9,10 @@ import Button from "../ui/Button";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { uiActions } from "@/Store/uiSlice";
-import { AnimatePresence } from "framer-motion"; 
+import { AnimatePresence } from "framer-motion";
 import TestComp from "./testComp";
+import { useParams } from "next/navigation";
+import Loading from "../SVG/Loading";
 const HotelDetail = () => {
   const FormatDate = (dateString) => {
     const date = new Date(dateString);
@@ -22,12 +24,43 @@ const HotelDetail = () => {
     return formattedDate;
   };
 
-  const dispatch = useDispatch();
+  const [Hotel, setHotel] = useState();
+
+  const hotelId = useParams();
+  const getHotels = async () => {
+    try {
+      const response = await fetch(
+        `https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel/${hotelId.hotelId}.json`,
+        {
+          method: "GET",
+        }
+      );
+      const body = await response.json();
+      setHotel(body);
+      console.log(body);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getHotels();
+  }, []);
+
+  if (!Hotel) {
+    return (
+      <div className="h-[100vh] w-full flex items-center justify-center  ">
+        <Loading></Loading>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.main}>
       <div>
-        <AnimatePresence><TestComp /></AnimatePresence>
-        
+        <AnimatePresence>
+          <TestComp Images={Hotel.imageUrls} />
+        </AnimatePresence>
       </div>
       <div>
         <GradientCard
@@ -44,7 +77,7 @@ const HotelDetail = () => {
                 fontSize: "30px",
               }}
             >
-              The Taj
+              {Hotel.name}
             </h1>
             <div className={classes.address}>
               <ul>
@@ -55,7 +88,7 @@ const HotelDetail = () => {
                   className={classes.addText}
                   style={{ fontFamily: "Montserrat, sans-serif" }}
                 >
-                  Mumbai, Apollo Bandar, Colaba
+                  {Hotel.address}
                 </li>
               </ul>
             </div>
@@ -63,15 +96,12 @@ const HotelDetail = () => {
               <StarRating Fixed={3} />
             </div>
             <div style={{ fontFamily: "Montserrat, sans-serif" }}>
-              "Nestled elegantly along the Arabian Sea with a commanding view of
-              the Gateway of India, this distinguished hotel, established in
-              1903, stands as India’s inaugural luxury accommodation. A beacon
-              of timeless sophistication and prestige, it has welcomed esteemed
-              guests from across the globe, embodying a seamless blend of
-              historic charm and modern luxury."
+              {Hotel.description}
             </div>
           </div>
-         <Link href='/TestModel'><Button marginTop={'20px'} >Book Now</Button></Link>
+          <Link href="/TestModel">
+            <Button marginTop={"20px"}>Book Now</Button>
+          </Link>
         </GradientCard>
       </div>
       <div className={classes.amenities}>
@@ -83,10 +113,11 @@ const HotelDetail = () => {
         >
           <div>Amenities</div>
           <ul>
-            <li>AC</li>
-            <li>Parking</li>
-            <li>Free WIFI</li>
-            <li>Breakfast</li>
+              <ul>
+                {Hotel.facilities.map((facility) => (
+                  <li key={facility}>{facility}</li>
+                ))}
+              </ul>
           </ul>
         </GradientCard>
       </div>
@@ -106,7 +137,7 @@ const HotelDetail = () => {
               "The historical property is a treat. everything is tasteful. The rooms are luxurious and the service is super. The view from the sea lounge is beautiful if you manage to get a window seat try and get one. The food at wasabi and gold dragon is excellent as is the service."
             }
           />
-                    <Comment
+          <Comment
             name={"New User"}
             date={FormatDate("2023-09-09T00:00:00")}
             rating={4}
@@ -117,7 +148,6 @@ const HotelDetail = () => {
         </GradientCard>
         <Button>More Reviewes</Button>
       </div>
-      
     </div>
   );
 };

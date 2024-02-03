@@ -67,7 +67,7 @@
   gap: 10px;
 }
 .addText {
-  font-size: 25px;
+  font-size: fit-content;
 }
 
 .Services ul {
@@ -78,7 +78,7 @@
 
 .bill {
   align-self: flex-end;
-  font-size: 190%;
+  font-size: 2vw;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;

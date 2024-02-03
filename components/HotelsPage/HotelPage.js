@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import Image from 'next/image'
 import classes from "./HotelPage.module.css";
 import CityCard from "../ui/CityCard";
@@ -17,18 +17,20 @@ const CITIS = [
   { image: "london.jpg", name: "london" },
 ];
 
+
+
 const HotelPage = () => {
+  const HOTELS =[];
   const [page, setPage] = useState(1);
+  const [Hotels,setHotels] = useState([]);
   const changePageHandler = () => {
-    setPage((prevState)=>{
-     
-        return prevState + 1;
+    setPage((prevState) => {
+      return prevState + 1;
     });
     window.scrollTo({
-      top: '550',
-      behavior: 'smooth' // Smooth scrolling effect
+      top: "550",
+      behavior: "smooth", // Smooth scrolling effect
     });
-  
   };
 
   const hotelCardVarients = {
@@ -48,6 +50,43 @@ const HotelPage = () => {
       staggerChildren: -0.1,
     },
   };
+
+  const getHotels = async () => {
+      
+    try {
+      const response = await fetch(
+        "https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel.json",
+        {
+          method: "GET",
+        }
+      );
+      const body = await response.json();
+      console.log(body); 
+      for (let key in body) {
+        HOTELS.push({
+          key: key,
+          name: body[key].name,
+          address: body[key].address,
+          city: body[key].city,
+          country: body[key].country,
+          description: body[key].description,
+          facilities: body[key].facilities,
+          images: body[key].imageUrls,
+        });
+      }
+      console.log("here");
+      console.log(HOTELS);
+      setHotels(HOTELS);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  
+  useEffect(() => {
+    getHotels();
+  }, []);
+  
 
   return (
     <div className={classes.main}>
@@ -75,12 +114,14 @@ const HotelPage = () => {
           animate="animate"
           exit="exit"
         >
-          {page && Array.from({ length: page }, (_, index) => index).map((pageNo, index) => (
-              <motion.div key={index} variants={hotelCardVarients}>
-                <HotelCard />
-              </motion.div>
-            ))
-          }
+          {
+            Hotels.map(
+              (hotel) => (
+                <motion.div key={hotel.key} variants={hotelCardVarients}>
+                  <HotelCard hotel={hotel}/>
+                </motion.div>
+              )
+            )}
         </motion.div>
       </AnimatePresence>
       <div className="m-2">

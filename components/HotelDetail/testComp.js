@@ -4,15 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import PreviousMap from "postcss/lib/previous-map";
 import { useScroll, useInView } from "framer-motion";
 
-const TestComp = () => {
+const TestComp = (props) => {
   const [bigImage, setBigImage] = useState(false);
-  const HOTEL_PICS = [
-    "hotel1.jpg",
-    "hotel2.jpg",
-    "hotel3.jpg",
-    "hotel4.jpg",
-    "hotel5.jpg",
-  ];
+  const HOTEL_PICS = props.Images
 
   const scorllRef = useRef();
   const imageRef = useRef();
@@ -122,7 +116,7 @@ const TestComp = () => {
               initial="center"
               animate={positions[imagePostion[index]]}
               transition={{ duration: 0.5 }}
-              src={"/hotels/" + HOTEL_PICS[index]}
+              src={HOTEL_PICS[index]}
               className=" h-[20vw] w-[30vw] absolute rounded-md"
             />
           );

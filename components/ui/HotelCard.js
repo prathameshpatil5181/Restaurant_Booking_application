@@ -8,7 +8,7 @@ import StarRating from "./StarRating";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
-const HotelCard = () => {
+const HotelCard = (props) => {
   const HOTEL_PICS = [
     "hotel1.jpg",
     "hotel2.jpg",
@@ -17,8 +17,6 @@ const HotelCard = () => {
     "hotel5.jpg",
     "hotel6.jpg",
   ];
-  const dispatch = useDispatch();
-  const isVisible = useSelector((state) => state.ui.isVisible);
   const router = useRouter();
   const [mainImage, setMainImage] = useState(HOTEL_PICS[0]);
   const imageClick = (imageString) => {
@@ -63,7 +61,7 @@ const HotelCard = () => {
             initial="initial"
             animate="animate"
             exit="exit"
-            src={`/hotels/${mainImage}`}
+            src={`${props.hotel.images[0]}`}
             className={classes.image}
           />
         </AnimatePresence>
@@ -82,10 +80,10 @@ const HotelCard = () => {
         initial="hidden"
         animate="show"
       >
-        {[...Array(6)].map((pic, index) => (
+        {props.hotel.images.map((pic, index) => (
           <motion.img
             key={pic}
-            src={`/hotels/${HOTEL_PICS[index]}`}
+            src={pic}
             alt="image"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 1 } }}
@@ -99,7 +97,7 @@ const HotelCard = () => {
       <div className={classes.moveBottom}>
         <div className={classes.description}>
           <div className={classes.name}>
-            <h1>THE TAJ</h1>
+            <h1>{props.hotel.name}</h1>
           </div>
 
           <div className={classes.address}>
@@ -107,7 +105,7 @@ const HotelCard = () => {
               <li>
                 <Location />
               </li>
-              <li className={classes.addText}>Mumbai, Apollo Bandar, Colaba</li>
+              <li className={classes.addText} >{props.hotel.address}</li>
             </ul>
           </div>
 
@@ -117,39 +115,30 @@ const HotelCard = () => {
 
           <div className={classes.Services}>
             <ul>
-              <li key='ac'>AC</li>
-              <li key='tv'>TV</li>
-              <li key='park'>Parking</li>
-              <li key='wifi'>Free WIFI</li>
+              {
+              props.hotel.facilities.map(facility=>
+                <li key={facility}>{facility}</li>
+               )
+              }
             </ul>
           </div>
         </div>
 
-        <div className={classes.bill}>
-          <div>₹ 5000</div>
-          {isVisible ? (
+        <div className='grid grid-flow-col items-end h-full'>
+          <div className="self-end text-[2vw]">₹ 25000</div>
+          
             <button
-              onClick={() => {
-                dispatch(compareActions.removeHotels(1));
-              }}
-            >
-              Remove
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                dispatch(compareActions.addHotels(1));
-              }}
+             className="justify-self-center text-[2vw] bg-white text-black rounded-2xl w-fit h-fit px-5"
             >
               Add
             </button>
-          )}
 
           <button
+         className="justify-self-center text-[2vw] bg-white text-black rounded-2xl w-fit h-fit px-5"
             onClick={() => {
-              router.push("/Hotels/1");
+              router.push(`/Hotels/${props.hotel.key}`);
             }}
-          >
+          > 
             Book
           </button>
         </div>

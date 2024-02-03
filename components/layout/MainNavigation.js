@@ -53,7 +53,7 @@ function MainNavigation() {
             }
             style={{}}
           >
-            <button onClick={()=>{dispatch(ModelActions.toggleModel())}}>
+            <button onClick={()=>{dispatch(ModelActions.toggleModel({message:''}))}}>
               onToggle
             </button>
             {isLoggedIn ? (

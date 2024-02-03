@@ -12,31 +12,37 @@ function Layout(props) {
 
   return (
     <div className="Master-class">
-      <div className="ModelClass">{visible ? <Model /> : null}</div>
-      <div className={`${visible?'z-0 relative':''}`}>
-      <div className={classes.layoutMain}>
-        <MainNavigation />
-        <AnimatePresence>
-          <div
-            className={classes.borderClass}
-            style={{
-              padding:
-                pathName === "/Login" || pathName === "/Signup"
-                  ? ""
-                  : "13vh 10vw 0 10vw",
-            }}
-          >
-            <main className={classes.main}>{props.children}</main>
-          </div>
-          {pathName === "/Login" ||
-          pathName === "/Signup" ||
-          pathName === "/addhotel" ? (
-            ""
-          ) : (
-            <Footer />
-          )}
-        </AnimatePresence>
+      <div className="ModelClass">
+        {visible ? (
+          <AnimatePresence>
+            <Model />{" "}
+          </AnimatePresence>
+        ) : null}
       </div>
+      <div className={`${visible ? "z-0 relative" : ""}`}>
+        <div className={classes.layoutMain}>
+          <MainNavigation />
+          <AnimatePresence>
+            <div
+              className={classes.borderClass}
+              style={{
+                padding:
+                  pathName === "/Login" || pathName === "/Signup"
+                    ? ""
+                    : "13vh 10vw 0 10vw",
+              }}
+            >
+              <main className={classes.main}>{props.children}</main>
+            </div>
+            {pathName === "/Login" ||
+            pathName === "/Signup" ||
+            pathName === "/addhotel" ? (
+              ""
+            ) : (
+              <Footer />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
