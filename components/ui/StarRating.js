@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 const StarRating = (props) => {
-  const [rating, setRating] = useState(props.Fixed ? props.Fixed : 2);
+  const [rating, setRating] = useState(props.Fixed ? props.Fixed : 0);
   const totalStars = 5;
 
   const handleClick = (selectedRating) => {
+    props.setStars(selectedRating);
     setRating(selectedRating);
   };
 

@@ -3,12 +3,25 @@ import classes from "./Layout.module.css";
 import Footer from "../HomePage/Footer";
 import { usePathname } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { AuthActions } from "@/Store/AuthSlice";
+import { useEffect } from "react";
 import Model from "../ui/Model";
 function Layout(props) {
   const pathName = usePathname();
+  const dispatch = useDispatch();
   const visible = useSelector((state) => state.model.modelIsVisible);
+  const intitialSetup = () => {
+    const storedUserId = localStorage.getItem("userId");
+
+    if (storedUserId) {
+      dispatch(AuthActions.setLoggedIn());
+    }
+  };
+
+  useEffect(() => {
+    intitialSetup();
+  }, []);
 
   return (
     <div className="Master-class">

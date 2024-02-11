@@ -7,12 +7,11 @@ import StarRating from "../ui/StarRating";
 import Comment from "../ui/Comment";
 import Button from "../ui/Button";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { uiActions } from "@/Store/uiSlice";
 import { AnimatePresence } from "framer-motion";
 import TestComp from "./testComp";
 import { useParams } from "next/navigation";
 import Loading from "../SVG/Loading";
+import AddComment from "./AddComment";
 const HotelDetail = () => {
   const FormatDate = (dateString) => {
     const date = new Date(dateString);
@@ -24,7 +23,9 @@ const HotelDetail = () => {
     return formattedDate;
   };
 
+  const [showComment,setShowComment] = useState(false);
   const [Hotel, setHotel] = useState();
+  const [comment,setComment] = useState([]);
 
   const hotelId = useParams();
   const getHotels = async () => {
@@ -36,8 +37,17 @@ const HotelDetail = () => {
         }
       );
       const body = await response.json();
+
+      
       setHotel(body);
-      console.log(body);
+      const comments = body.comment;
+      const temp = []
+      for(let key in comments){
+        temp.push(comments[key]);
+      }
+
+      setComment(temp);
+  
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +109,7 @@ const HotelDetail = () => {
               {Hotel.description}
             </div>
           </div>
-          <Link href="/TestModel">
+          <Link href={`${hotelId.hotelId}/checkout`}>
             <Button marginTop={"20px"}>Book Now</Button>
           </Link>
         </GradientCard>
@@ -123,30 +133,30 @@ const HotelDetail = () => {
       </div>
       <div className={classes.title}>Customer Reviewes</div>
       <div className={classes.Comments}>
+        {comment.length>0 &&
         <GradientCard
-          height={"fit-content"}
+        height={"fit-content"}
+        width={"100%"}
+        padding={"50px"}
+        margin={"60px"}
+      >
+        {comment && comment.map(user=>(
+          <Comment
+          name={user.userName}
+          date={FormatDate("2023-09-09T00:00:00")}
+          rating={user.stars}
+          comment={
+            user.userComment
+          }/>
+        ))}
+      </GradientCard>
+        }
+        
+            {showComment&&<GradientCard height={"fit-content"}
           width={"100%"}
           padding={"50px"}
-          margin={"60px"}
-        >
-          <Comment
-            name={"New User"}
-            date={FormatDate("2023-09-09T00:00:00")}
-            rating={4}
-            comment={
-              "The historical property is a treat. everything is tasteful. The rooms are luxurious and the service is super. The view from the sea lounge is beautiful if you manage to get a window seat try and get one. The food at wasabi and gold dragon is excellent as is the service."
-            }
-          />
-          <Comment
-            name={"New User"}
-            date={FormatDate("2023-09-09T00:00:00")}
-            rating={4}
-            comment={
-              "The historical property is a treat. everything is tasteful. The rooms are luxurious and the service is super. The view from the sea lounge is beautiful if you manage to get a window seat try and get one. The food at wasabi and gold dragon is excellent as is the service."
-            }
-          />
-        </GradientCard>
-        <Button>More Reviewes</Button>
+          margin={"60px"}><div><AddComment/></div></GradientCard> }
+        <Button onClick={()=>setShowComment(true)}>add Review</Button>
       </div>
     </div>
   );

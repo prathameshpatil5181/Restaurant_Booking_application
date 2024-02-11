@@ -3,9 +3,9 @@ import BillingModel from './BillingModel'
 import FormModel from './FormModel'
 const CombineModel = () => {
   return (
-    <div className='flex flex-col gap-5 md:flex-row md:max-lg:flex-row-reverse' style={{padding: "150px 150px 0 150px",}}>
-      <FormModel/>
+    <div className='flex flex-col lg:flex-row gap-5 lg:gap-2 p-5' >
       <BillingModel/>
+      <FormModel/>
     </div>
   )
 }

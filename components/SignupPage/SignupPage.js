@@ -16,6 +16,8 @@ const SignupPage = () => {
   const route = useRouter();
   const nameRef = useRef();
   const signup = useSelector((state) => state.auth.signup);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const loginMessage = useSelector(state=>state.auth.loginMessage)
 
   const [email, setEmail] = useState({
     value: "",
@@ -40,7 +42,7 @@ const SignupPage = () => {
         isEmailValid: EmailValidation(event.target.value),
       };
     });
-  }, 1000);
+  }, 500);
 
   const passwordChangeHandler = debounce((event) => {
     console.log(password.isPasswordValid);
@@ -52,7 +54,7 @@ const SignupPage = () => {
         isPasswordValid: passwordValidation(event.target.value),
       };
     });
-  }, 1000);
+  }, 500);
 
   const dispatch = useDispatch();
 
@@ -75,9 +77,8 @@ const SignupPage = () => {
         })
       );
 
-    } else {
-      console.log("error in signing up");
-    }
+    } 
+
   };
 
   const setSignup = () => {
@@ -89,6 +90,19 @@ const SignupPage = () => {
       })
     );
   };
+
+  useEffect(()=>{
+    if(isLoggedIn && loginMessage==='success' ){
+      if (route.asPath === '/Login') {
+        // If the current route is '/Login', go back again
+        route.back();
+        route.back();
+      } else {
+        // Otherwise, go back to the previous page
+        route.back();
+      }
+    }
+  },[isLoggedIn,loginMessage]);
 
   useEffect(() => {
     setSignup(); // Corrected to call the function

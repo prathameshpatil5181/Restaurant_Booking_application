@@ -55,6 +55,7 @@ const HotelCard = (props) => {
             exit="exit"
             src={mainImage}
             className={classes.image}
+            alt="image"
           />
         </AnimatePresence>
       </div>
@@ -102,7 +103,7 @@ const HotelCard = (props) => {
           </div>
 
           <div className={classes.rating}>
-            <StarRating Fixed={5} />
+            <StarRating Fixed={props.hotel.starRating} />
           </div>
 
           <div className={classes.Services}>
@@ -117,7 +118,7 @@ const HotelCard = (props) => {
         </div>
 
         <div className='grid grid-flow-col items-end h-full'>
-          <div className="self-end text-[2vw]">₹ 25000</div>
+          <div className="self-end text-[2vw]">{props.hotel.price}</div>
           
             <button
              className="justify-self-center text-[2vw] bg-white text-black rounded-2xl w-fit h-fit px-5"

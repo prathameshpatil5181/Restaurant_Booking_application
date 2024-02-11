@@ -35,6 +35,9 @@
     gap:5px;
     align-items: center;
     flex-grow: 1;
+    background-color: white;
+    color: black;
+    border-radius: 20px;
 }
 
 .room button{

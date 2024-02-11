@@ -2,15 +2,17 @@ import React, { useRef, useEffect, useState } from "react";
 import classes from "./AddHotel.module.css";
 import Button from "../ui/Button";
 import UploadSvg from "../ui/UploadSvg";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
+import StarRating from "../ui/StarRating";
+import { sendToserver } from "@/Store/FormCreator";
 
 ///------------------------------------------------------------
 ///------------------------------------------------------------
 
 const AddHotel = () => {
   const [imageFiles, setImageFiles] = useState([]);
-
+  const [stars,setStars] = useState(0);
   const [allOptions, setAllOptions] = useState([
     "AC",
     "WIFI",
@@ -30,13 +32,15 @@ const AddHotel = () => {
   const countryRef = useRef();
   const descriptionRef = useRef();
   const imageUrls = [];
+  const priceref = useRef();
+  const checkBoxRef = useRef();
 
   // setting up the variables for the validation
   const HotelNameRef = useRef();
 
   //dispatch dec
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(state=>state.auth.isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const removeHandler = (itemToRemove) => {
     setSelected((prevSelected) =>
@@ -97,7 +101,6 @@ const AddHotel = () => {
     };
   }, [model]);
 
-
   const showImages = (e) => {
     let imageUrls = [];
     for (let i = 0; i < e.target.files.length; i++) {
@@ -115,8 +118,8 @@ const AddHotel = () => {
   const formSubmitHandler = async (e) => {
     e.preventDefault();
 
-    if(!isLoggedIn){
-      console.log("loginFirst")
+    if (!isLoggedIn) {
+      console.log("loginFirst");
       return;
     }
     if (
@@ -125,19 +128,23 @@ const AddHotel = () => {
       cityRef.current.value &&
       countryRef.current.value &&
       descriptionRef.current.value &&
-      imageFiles.length >0
+      imageFiles.length > 0 && 
+      stars>0 &&
+      priceref.current.value!=null
     ) {
-        dispatch(
-          sendToserver({
-            name: namRef.current.value,
-            address: addressRef.current.value,
-            city: cityRef.current.value,
-            country: countryRef.current.value,
-            description: descriptionRef.current.value,
-            imageFiles: imageFiles,
-            facilities: selected,
-          })
-        );
+      dispatch(
+        sendToserver({
+          name: namRef.current.value,
+          address: addressRef.current.value,
+          city: cityRef.current.value,
+          country: countryRef.current.value,
+          description: descriptionRef.current.value,
+          imageFiles: imageFiles,
+          facilities: selected,
+          starRating:stars,
+          price:priceref.current.value,
+        })
+      );
     } else {
       console.log("someIssue");
     }
@@ -151,6 +158,10 @@ const AddHotel = () => {
           <form onSubmit={formSubmitHandler}>
             <label htmlFor="name">Name</label>
             <input type="text" id="name" ref={namRef}></input>
+            <div className="flex flex-row items-center gap-5">
+              <label>Rating</label>
+              <StarRating setStars={setStars}/>
+            </div>
 
             <label htmlFor="address">Address</label>
             <input
@@ -233,6 +244,14 @@ const AddHotel = () => {
             <label htmlFor="desc">Description</label>
             <input type="text" id="desc" ref={descriptionRef}></input>
 
+            <label htmlFor="price">Room Price</label>
+            <input
+            className="noIncrement"
+              type="number"
+              id="price"
+              ref={priceref}
+            ></input>
+            
             <div className={classes.upload}>
               <div>Upload Images</div>
               <input
@@ -261,11 +280,35 @@ const AddHotel = () => {
                   ))
                 : ""}
             </div>
-            <div className={classes.terms}>
-              <input type="checkbox" />
-              <label>Terms & Conditions</label>
+
+            <div className="flex items-center bg-black p-4">
+              <input
+                id="link-checkbox"
+                type="checkbox"
+                value=""
+                className="w-4 h-4 text-blue-600 bg-white border-gray-300  focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 m-0"
+              />
+              <label
+                htmlFor="link-checkbox"
+                className="ms-2 text-sm font-medium text-white dark:text-gray-300"
+              >
+                I agree with the{" "}
+                <a
+                  href="#"
+                  className="text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  terms and conditions
+                </a>
+                .
+              </label>
             </div>
-            <button type="submit">Submit</button>
+
+            <button
+              type="submit"
+              className="bg-white text-black rounded-xl px-5 w-full  text-xl p-3"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>

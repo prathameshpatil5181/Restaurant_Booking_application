@@ -69,12 +69,14 @@ const storeUser = (userData) => {
           body: JSON.stringify(userData),
         });
         const temp = await response.json();
+        localStorage.setItem("userId", temp.name);
         dispatch(
           AuthActions.setSignupMessage({
             status: "Done",
             message: "Success",
           })
         );
+        dispatch(AuthActions.setLoggedIn(userData));
       }
     } catch (error) {
       console.log("error");
@@ -93,6 +95,7 @@ export const LoginUser = (userData) => {
     );
 
     if (userExits) {
+      localStorage.setItem("userId", userExits.key);
       dispatch(AuthActions.setLoggedIn(userData));
     } else {
       dispatch(
@@ -116,10 +119,15 @@ export const sendToserver = ({
   description,
   imageFiles,
   facilities,
+  starRating,
+  price,
 }) => {
   return async (dispatch) => {
-    console.log("done")
-    dispatch(ModelActions.toggleModel({message:"Loading"}));
+
+
+    console.log("done");
+
+    dispatch(ModelActions.toggleModel({ message: "Loading" }));
 
     try {
       const storage = getStorage();
@@ -134,7 +142,6 @@ export const sendToserver = ({
           console.log("Uploaded a blob or file!");
           getDownloadURL(snapshot.ref).then(async (val) => {
             console.log(val);
-            console.log("uploaded succesfully");
             imageUrls.push(val);
             if (imageUrls.length === imageFiles.length) {
               if (
@@ -157,12 +164,14 @@ export const sendToserver = ({
                       description,
                       imageUrls: imageUrls,
                       facilities,
+                      starRating,
+                      price,
                     }),
                   }
                 );
 
                 const json = await response.json();
-                dispatch(ModelActions.toggleModel({message:""}));
+                dispatch(ModelActions.toggleModel({ message: "done" }));
                 console.log(json);
               } else {
                 // Your logic when any of the refs does not have a value or imageUrls is empty
@@ -175,7 +184,6 @@ export const sendToserver = ({
     } catch (error) {
       console.error("Error uploading image:", error);
     }
-
   };
 };
 

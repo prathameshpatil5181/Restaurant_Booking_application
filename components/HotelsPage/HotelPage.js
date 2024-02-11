@@ -8,6 +8,7 @@ import SearchBar from "./SearchBar";
 import Pagination from "../ui/Pagination";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Loading from "../SVG/Loading";
 const CITIS = [
   { image: "paris.jpg", name: "paris" },
   { image: "nyc.jpg", name: "new york" },
@@ -17,12 +18,11 @@ const CITIS = [
   { image: "london.jpg", name: "london" },
 ];
 
-
-
 const HotelPage = () => {
-  const HOTELS =[];
+ 
   const [page, setPage] = useState(1);
-  const [Hotels,setHotels] = useState([]);
+  const [Hotels, setHotels] = useState([]);
+  const [searched,setSearched] = useState([]);
   const changePageHandler = () => {
     setPage((prevState) => {
       return prevState + 1;
@@ -51,8 +51,9 @@ const HotelPage = () => {
     },
   };
 
+ 
+
   const getHotels = async () => {
-      
     try {
       const response = await fetch(
         "https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel.json",
@@ -61,7 +62,7 @@ const HotelPage = () => {
         }
       );
       const body = await response.json();
-      console.log(body); 
+      const HOTELS = [];
       for (let key in body) {
         HOTELS.push({
           key: key,
@@ -72,22 +73,39 @@ const HotelPage = () => {
           description: body[key].description,
           facilities: body[key].facilities,
           images: body[key].imageUrls,
+          price:body[key].price,
+          starRating:body[key].starRating,
         });
       }
-      console.log("here");
-      console.log(HOTELS);
       setHotels(HOTELS);
+      setSearched(HOTELS);
     } catch (error) {
       console.error(error);
     }
   };
-  
-  
+
   useEffect(() => {
     getHotels();
   }, []);
-  
 
+  const handleSearch = (search) => {
+    const filterdValue = Hotels.filter((hotel) => {
+      search = search.toLowerCase();
+      return (
+        hotel.city.toLowerCase().includes(search) ||
+        hotel.name.toLowerCase().includes(search)
+      );
+    });
+    if(filterdValue){
+      setSearched(filterdValue);
+    }
+      else{
+        setSearched([]);
+      }
+  };
+if(!searched){
+  return <Loading/>
+}
   return (
     <div className={classes.main}>
       <div className={classes.grid}>
@@ -105,7 +123,7 @@ const HotelPage = () => {
         ))}
       </div>
       <div>
-        <SearchBar />
+        <SearchBar onChange={handleSearch} />
       </div>
       <AnimatePresence>
         <motion.div
@@ -114,19 +132,17 @@ const HotelPage = () => {
           animate="animate"
           exit="exit"
         >
-          {
-            Hotels.map(
-              (hotel) => (
-                <motion.div key={hotel.key} variants={hotelCardVarients}>
-                  <HotelCard hotel={hotel}/>
-                </motion.div>
-              )
-            )}
+          {searched &&
+            searched.map((hotel) => (
+              <motion.div key={hotel.key} variants={hotelCardVarients}>
+                <HotelCard hotel={hotel} />
+              </motion.div>
+            ))}
         </motion.div>
       </AnimatePresence>
-      <div className="m-2">
+      {/* <div className="m-2">
         <Pagination pages={5} active={page} onClick={changePageHandler} />
-      </div>
+      </div> */}
     </div>
   );
 };

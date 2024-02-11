@@ -1,5 +1,5 @@
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-
+import { ModelActions } from "./ModelSlice";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -26,51 +26,64 @@ export const sendToserver = ({
   description,
   imageFiles,
   facilities,
+  starRating,
+  price,
 }) => {
   return async (dispatch) => {
-    //dispatch the submitting action here
+
+
+    console.log("done");
+
+    dispatch(ModelActions.toggleModel({ message: "Loading" }));
 
     try {
-      // Handle your POST request logic here
       const storage = getStorage();
       const imageUrls = [];
       // Perform actions with the image data (e.g., upload to Firebase Storage)
       imageFiles.map(async (imagesFile, index) => {
         const imageRef = ref(
           storage,
-          `hotels/${
-           name!= "" ? name: "test"
-          }/${imagesFile.name}`
+          `hotels/${name != "" ? name : "test"}/${imagesFile.name}`
         );
         await uploadBytes(imageRef, imagesFile.image).then((snapshot) => {
           console.log("Uploaded a blob or file!");
           getDownloadURL(snapshot.ref).then(async (val) => {
             console.log(val);
-            console.log("uploaded succesfully");
             imageUrls.push(val);
             if (imageUrls.length === imageFiles.length) {
-              const response = await fetch(
-                "https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel.json",
-                {
-                  method: "POST",
-                  body: JSON.stringify({
-                    name: name,
-                    address: address+" "+city+" "+country,
-                    city: city,
-                    country: country,
-                    description: description,
-                    imageUrls: imageUrls,
-                    facilities: facilities,
-                  }),
-                }
-              );
+              if (
+                name &&
+                address &&
+                country &&
+                description &&
+                facilities &&
+                imageFiles.length > 0
+              ) {
+                const response = await fetch(
+                  "https://hotelmania-7bfd0-default-rtdb.firebaseio.com/Hotel.json",
+                  {
+                    method: "POST",
+                    body: JSON.stringify({
+                      name,
+                      address,
+                      city,
+                      country,
+                      description,
+                      imageUrls: imageUrls,
+                      facilities,
+                      starRating,
+                      price,
+                    }),
+                  }
+                );
 
-              const json = response.json();
-              console.log(json);
-              
-            } else {
-              // Your logic when any of the refs does not have a value or imageUrls is empty
-              console.log("Some fields are empty or imageUrls is empty");
+                const json = await response.json();
+                dispatch(ModelActions.toggleModel({ message: "done" }));
+                console.log(json);
+              } else {
+                // Your logic when any of the refs does not have a value or imageUrls is empty
+                console.log("Some fields are empty or imageUrls is empty");
+              }
             }
           });
         });
@@ -79,6 +92,7 @@ export const sendToserver = ({
       console.error("Error uploading image:", error);
     }
   };
-
-  //dispatch done action here and go back to the prevPage
 };
+
+//------------------------------------------------------------------------------------------------------------------------
+

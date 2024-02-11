@@ -59,7 +59,7 @@ const LoginPage = () => {
 
   useEffect(()=>{
     if(isLoggedIn && loginMessage==='success' ){
-      route.push('/');
+      route.back();
     }
   },[isLoggedIn,loginMessage]);
 

@@ -16,7 +16,7 @@ const Model = (props) => {
       style={{}}
       onClick={closeToggle}
     >
-      <AnimatePresence>
+      <AnimatePresence> 
         <motion.div
           initial={{
             y: "-500%",

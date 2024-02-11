@@ -27,7 +27,7 @@ export const passwordValidation = (password)=>{
 }
 
 
-export const debounce =(callbackFn, delay) => {
+export const debounce = (callbackFn, delay) => {
   let timeout
   return (...args)=>{
     clearTimeout(timeout)

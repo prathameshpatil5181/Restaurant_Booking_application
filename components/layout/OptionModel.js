@@ -77,6 +77,7 @@ const OptionModel = ({ showModal, setShowModal }) => {
             variants={listVarients}
             onClick={() => {
               setShowModal(false);
+              localStorage.removeItem('userId');
               dispatch(AuthActions.setLogOut());
             }}
           >
