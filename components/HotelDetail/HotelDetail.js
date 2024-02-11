@@ -142,6 +142,7 @@ const HotelDetail = () => {
       >
         {comment && comment.map(user=>(
           <Comment
+          key={user}
           name={user.userName}
           date={FormatDate("2023-09-09T00:00:00")}
           rating={user.stars}

@@ -14,7 +14,7 @@ const HotelModel = () => {
     >
       <div className="z-20">
         {[...Array(count)].map((x) => (
-            <HotelCard />
+            <HotelCard key={x} />
         ))}
       </div>
       <Button onClick={() => dispatch(uiActions.toggle())}>Close</Button>

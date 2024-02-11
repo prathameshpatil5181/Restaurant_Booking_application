@@ -8,9 +8,9 @@ const CommentComp = () => {
       </div>
       <div className={classes.comment}>
         <p>
-          "Stunning design and easy navigation! I found booking my dream getaway
-          seamless and hassle-free. Can't wait to experience the luxury and
-          comfort your hotel promises. Highly recommended!"
+        &apos;Stunning design and easy navigation! I found booking my dream getaway
+          seamless and hassle-free. Can&apos;t wait to experience the luxury and
+          comfort your hotel promises. Highly recommended&apos;
         </p>
       </div>
     </div>

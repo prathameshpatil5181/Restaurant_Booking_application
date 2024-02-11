@@ -50,16 +50,16 @@ const Header = () => {
           />
         </div>
       </AnimatePresence>
-      <div className={classes.title}>Explore from Million's</div>
+      <div className={classes.title}>Explore from Million&apos;s</div>
       <div className={classes.description}>
-        “Welcome to our oasis of comfort and luxury, where every stay is a
+      &apos;Welcome to our oasis of comfort and luxury, where every stay is a
         journey to tranquility. Explore our handpicked selection of exquisite
         accommodations, tailored to meet your every need. Indulge in
         unparalleled hospitality and create unforgettable memories in our
         elegant retreat. Discover a world of unparalleled comfort and
         convenience, where your satisfaction is our utmost priority. Reserve
         your slice of paradise today and let us weave an experience that
-        transcends the ordinary."
+        transcends the ordinary.&apos;
       </div>
       <div className={classes.changeDots}>
         <Dots
