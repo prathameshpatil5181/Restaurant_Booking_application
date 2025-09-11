@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 const HotelCard = (props) => {
   const router = useRouter();
-  const [mainImage, setMainImage] = useState(props.hotel.images[0]);
+  // const [mainImage, setMainImage] = useState(props.hotel.images[0]);
   const imageClick = (imageString) => {
     setMainImage(imageString);
   };
